@@ -1,0 +1,22 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}ListeCadeau{% endblock %}
+
+{% block body %}
+    <h1>ListeCadeau</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ liste_cadeau.id }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_liste_cadeau_index') }}">back to list</a>
+
+    <a href="{{ path('app_liste_cadeau_edit', {'id': liste_cadeau.id}) }}">edit</a>
+
+    {{ include('liste_cadeau/_delete_form.html.twig') }}
+{% endblock %}

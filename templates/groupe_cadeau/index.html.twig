@@ -1,0 +1,37 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}GroupeCadeau index{% endblock %}
+
+{% block body %}
+    <h1>GroupeCadeau index</h1>
+    
+    {# <a href="{{ path('app_groupe_cadeau_show', {'id': groupe_cadeaus.id}) }}">show</a> #}
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>TypeGroupe</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for groupe_cadeau in groupe_cadeaus %}
+            <tr>
+                <td>{{ groupe_cadeau.id }}</td>
+                <td>{{ groupe_cadeau.typeGroupe }}</td>
+                <td>
+                    <a href="{{ path('app_groupe_cadeau_show', {'id': groupe_cadeau.id}) }}">show</a>
+                    <a href="{{ path('app_groupe_cadeau_edit', {'id': groupe_cadeau.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="3">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_groupe_cadeau_new') }}">Create new</a>
+{% endblock %}

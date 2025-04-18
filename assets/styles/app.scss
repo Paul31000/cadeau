@@ -1,0 +1,184 @@
+@import "~bootstrap/scss/bootstrap";
+
+body {
+    background-color: #DD2255 ;
+}
+
+.menu-gauche{
+    border: solid 20px #44000A ;
+    background-color: #DD2255;
+    height: 100vh;
+    display: flex;
+    align-items: start;
+    justify-content: center;
+    position: fixed;
+    z-index: 2;
+
+    ul{
+        font-family: "Shafarik", serif;
+        font-weight: 400;
+        font-size: 20px;
+        font-style: normal;
+        color:white;
+    }
+    
+    a{
+        font-family: "Shafarik", serif;
+        font-weight: 400;
+        font-style: normal;
+        color:white;
+        text-decoration:underline;
+    }
+}
+
+.page-border{
+  position: fixed;
+  border-right: solid 20px #FD5D5B;
+  border-top: solid 20px #FD5D5B;
+  border-bottom: solid 20px #FD5D5B;
+  height: 100vh;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.page-contenu{
+  z-index: 0;
+  background-color: #FCCA6F;
+  min-height: 100vh;
+  h1{
+    font-family: "Shafarik", serif;
+    font-weight: 400;
+    font-size: 40px;
+    font-style: normal;
+    color:#44000A;
+  }
+
+  h1::before{
+    content: url('../images/flocon-fonce.svg');
+    position: relative;
+    display: inline-block;
+    width: 30px;
+    height: 30px;
+    top: 3px;
+    left:-7px;
+  }
+  
+  h2{
+    font-family: "Shafarik", serif;
+    font-weight: 600;
+    font-size: 28px;
+    font-style: normal;
+    color:#44000A;
+  }
+
+  h2::before{
+    content: url('../images/candy.svg');
+    position: relative;
+    display: inline-block;
+    width: 30px;
+    height: 30px;
+    top: 8px;
+    left:-7px;
+  }
+
+  h3{
+    font-family: "Shafarik", serif;
+    font-weight: 600;
+    font-size: 25px;
+    font-style: normal;
+    color:#44000A;
+  }
+
+  ul{
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: 400;
+    font-size: 20px;
+    font-style: normal;
+    color:#44000A;
+    list-style: url('../images/flocon.svg');
+  }
+  
+  a{
+      font-family: Arial, Helvetica, sans-serif;
+      font-weight: 400;
+      font-style: normal;
+      color:#44000A;
+      text-decoration:underline;
+  }
+
+  button{
+    border-radius: 500px;
+    background-color: #FD5D5B; 
+    border: none;
+    color: #44000A;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+  }
+
+  button:hover{
+    background-color: #44000A; 
+    color:#FFFFFF;
+  }
+
+  .button-link{
+    border-radius: 500px;
+    background-color: #FD5D5B;
+    border: none;
+    color: #44000A;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+  }
+
+  button.petit{
+    border-radius: 500px;
+    background-color: #FD5D5B; /* Green */
+    border: none;
+    color: #44000A;
+    padding: 5px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+  }
+
+  .button-link.petit{
+    border-radius: 500px;
+    background-color: #FD5D5B; /* Green */
+    border: none;
+    color: #44000A;
+    text-align: center;
+    padding: 5px;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+  }
+
+  .rond-rouge{
+    border-radius: 500px;
+    background-color: #FD5D5B;
+    height: 200px;
+    width: 200px;
+    top:50px;
+    position: relative;
+    
+    svg{
+      position: relative;
+      top:-53px;
+      left:-63px;
+    }
+  }
+
+  .delete-update-cadeau{
+    left:183px;
+    top:-54px;
+    position: relative;
+  }
+}
+
+

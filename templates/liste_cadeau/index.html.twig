@@ -1,0 +1,33 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}ListeCadeau index{% endblock %}
+
+{% block body %}
+    <h1>ListeCadeau index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for liste_cadeau in liste_cadeaus %}
+            <tr>
+                <td>{{ liste_cadeau.id }}</td>
+                <td>
+                    <a href="{{ path('app_liste_cadeau_show', {'id': liste_cadeau.id}) }}">show</a>
+                    <a href="{{ path('app_liste_cadeau_edit', {'id': liste_cadeau.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="2">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_liste_cadeau_new') }}">Create new</a>
+{% endblock %}

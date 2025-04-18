@@ -1,0 +1,32 @@
+{% block body %}
+
+
+    <ul>
+        {% if messages|length > 0 %}
+            {% for message in messages %}
+                <li>
+                    <h3 {% if loop.index != 1 %} class='pt-4' {% endif %}>
+                        Le <strong> {{ message.datePoste|date('d/m/Y') }} </strong>
+                        {{ message.utilisateurPoste.pseudo }}
+                        disait:
+                    </h3>
+                    {{ message.text }}
+                    <div class="d-flex align-items-start pt-4">
+                        <a class="button-link petit" href="{{ path('app_message_edit', {'id': message.id}) }}">edit</a>
+                        <form 
+                            class="mx-3" 
+                            action="{{ url('app_message_delete', {'id': message.id}) }}" 
+                            method="post"
+                        >
+                            <input  type="hidden" name="token" value="{{ csrf_token('delete_message') }}"/>
+                            <button class="petit" type="submit">supprimer le message</button>
+                        </form>
+                    </div>
+                </li>
+            {% endfor %}
+        {% else %}
+            Il n'y a pas encore de commentaires.
+        {% endif %}
+    </ul>
+        
+{% endblock %}

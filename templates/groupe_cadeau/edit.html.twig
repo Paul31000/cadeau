@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit GroupeCadeau{% endblock %}
+
+{% block body %}
+    <h1>Edit GroupeCadeau</h1>
+
+    {{ include('groupe_cadeau/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('app_groupe_cadeau_index') }}">back to list</a>
+
+    {{ include('groupe_cadeau/_delete_form.html.twig') }}
+{% endblock %}

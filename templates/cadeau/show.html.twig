@@ -1,0 +1,78 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Cadeau{% endblock %}
+
+{% block body %}
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-9">
+                <h1>Cadeau</h1>
+
+                {# TODO dissocier pere noel de anniversaire #}
+                Cher père noël, je souhaite {{ cadeau.titre }}.
+                
+                {% if cadeau.urlRecomendee is not null %}
+                    <a target="_blank" href="{{ cadeau.urlRecomendee }}">J'en ai vu des beaux la:</a>
+                {% endif %}
+
+                Comme je suis capricieux je le préfère: {{ cadeau.taille ?? "il n'y a pas de taille préférée" }}.
+                Le Cadeau vaut: {{cadeau.prix}}.
+
+                {% set montantCouvert = 0 %}
+                {% for utilisateurOffre in cadeau.utilisateurOffres %}
+                    {% set montantCouvert = utilisateurOffre.montant + montantCouvert %}
+                {% endfor %}
+                Montant couvert {{montantCouvert}}.
+                
+                {% if not estDemandeur %}
+                    <h2 class='pt-4'>Commentaires:</h2>
+                    {{ render(controller('App\\Controller\\MessageController::index', {'idEntiteeLiee':cadeau.id, 'entiteeLiee':'cadeau'})) }} 
+
+                    
+                    <h3 class='pt-4'>Je poste un commentaire:</h3>
+                    {{ render(controller('App\\Controller\\MessageController::new', {'idEntiteeLiee':cadeau.id, 'entiteeLiee':'cadeau'})) }} 
+
+                    <h2 class='pt-4'>J'offre:</h2>
+
+                    <h3>Utilisateurs offrant:</h3>
+                    <ul>
+                        {% if cadeau.utilisateurOffres|length > 0 %}
+                            {% for utilisateurOffre in cadeau.utilisateurOffres %}
+                                <li>{{utilisateurOffre.utilisateurConcerne.pseudo}}</li>
+                            {% endfor %}
+                        {% else %}
+                            <li>Il n'y a pas encore de personnes offrant. Faites une proposition de prix.</li>
+                        {% endif %}
+                    </ul>
+
+                    <h3 class='pt-4'>J'ai regardé le prix:</h3>
+                    {{ render(controller('App\\Controller\\CadeauController::jairegarde', {'id':cadeau.id})) }} 
+
+                    <h3 class='pt-4'>J'offre:</h3>
+                    {{ render(controller('App\\Controller\\CadeauController::jePrends', {'id':cadeau.id})) }} 
+
+                {% endif %}
+                    {# TODO Je prends plus le cadeau #}
+                    {# TODO dissocier les utilisateurs qui achetent des utilisateurs qui cotisent #}
+                <br>
+                <br>
+                <br>
+                
+            </div>
+
+            <div class="col-3">
+                Cadeaux dans la liste de: {{cadeau.listeCadeau.utilisateur}}
+                <ul>
+                    {% for cadeau in cadeau.listeCadeau.cadeaux %}
+                        <li>
+                            <a href="{{ path('app_cadeau_show', {'id': cadeau.id}) }}">
+                                {{cadeau.titre}} 
+                            </a>
+                            {{cadeau.prix}}€
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </div>
+{% endblock %}

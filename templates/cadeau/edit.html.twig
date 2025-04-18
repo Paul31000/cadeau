@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit Cadeau{% endblock %}
+
+{% block body %}
+    <h1>Editer le cadeau pour le groupe {{ cadeau.listeCadeau.groupeCadeau.nomGroupe }}</h1>
+
+    {{ include('cadeau/_form.html.twig', {'button_label': 'Mettre à jour'}) }}
+
+    <div class="delete-update-cadeau">
+        {{ include('cadeau/_delete_form.html.twig') }}
+    </div>
+    
+{% endblock %}

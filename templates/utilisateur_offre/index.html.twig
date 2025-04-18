@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}UtilisateurOffre index{% endblock %}
+
+{% block body %}
+    <h1>UtilisateurOffre index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Montant</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for utilisateur_offre in utilisateur_offres %}
+            <tr>
+                <td>{{ utilisateur_offre.id }}</td>
+                <td>{{ utilisateur_offre.montant }}</td>
+                <td>
+                    <a href="{{ path('app_utilisateur_offre_show', {'id': utilisateur_offre.id}) }}">show</a>
+                    <a href="{{ path('app_utilisateur_offre_edit', {'id': utilisateur_offre.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="3">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_utilisateur_offre_new') }}">Create new</a>
+{% endblock %}

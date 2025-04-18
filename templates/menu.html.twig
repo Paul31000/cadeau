@@ -1,0 +1,22 @@
+
+  {# ceci sert a donner la route au menu pour afficher la page courante #}
+  {% set route = app.request.attributes.get('_route') %}
+  <nav>
+    <ul class="d-flex flex-column">
+        <li class="liste">
+          Menu:
+          <ul>
+                <li class="sous">
+                    <a href="{{ path('app_groupe_cadeau_new') }}" >Nouveau groupe cadeau</a>
+                </li>
+                {% for groupeCadeaux in groupesCadeaux %}
+                  <li class="sous">
+                      <a href="{{ path('app_groupe_cadeau_show',{'id': groupeCadeaux.id}) }}" >{{groupeCadeaux.nomGroupe}}</a>
+                  </li>
+                {% endfor %}
+          </ul>
+        </li>
+    </ul>
+  </nav>
+
+
