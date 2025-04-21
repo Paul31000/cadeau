@@ -2,12 +2,11 @@
 
 namespace App\Form;
 
-use App\Entity\Cadeau;
-use App\Entity\GroupeCadeau;
 use App\Entity\User;
-use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\FormBuilderInterface;
+use VictorPrdh\RecaptchaBundle\Form\ReCaptchaType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class UserType extends AbstractType
@@ -17,7 +16,8 @@ class UserType extends AbstractType
         $builder
             ->add('email')
             ->add('pseudo')
-            ->add('password')
+            ->add('password',PasswordType::class)
+            ->add("recaptcha", ReCaptchaType::class);
         ;
     }
 

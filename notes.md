@@ -11,6 +11,8 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 sensio framework extra bundle inutile
 
+> $this->denyAccessUnlessGranted('ROLE_AUTHENTIFIE');
+
 ## NPM compilateur
 
 utilisation de encore et de stimulus. et non asset mapper
@@ -50,8 +52,15 @@ if ($this->isCsrfTokenValid('delete'.$message->getId(), $request->getPayload()->
 
 > $this->addFlash('success', 'Vous avez créé une demande avec succès');
 
+## feuilles de style et de code js
+
+dans twig lier les feuilles:
+encore_entry_script_tags('le nom declare dans webpack')
+{{ encore_entry_link_tags('app') }}
+
+
 ## TODO
 
 Tom select
 login
-
+Ajouter .env à la production

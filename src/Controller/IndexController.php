@@ -14,7 +14,6 @@ final class IndexController extends AbstractController
     #[Route('/',name: 'accueil', methods: ['GET'])]
     public function accueil(): Response
     {
-        //$this->denyAccessUnlessGranted('ROLE_AUTHENTICATED');
         return $this->render('accueil.html.twig', [
         ]);
     } 

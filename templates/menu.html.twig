@@ -13,7 +13,11 @@
                   <li class="sous">
                       <a href="{{ path('app_groupe_cadeau_show',{'id': groupeCadeaux.id}) }}" >{{groupeCadeaux.nomGroupe}}</a>
                   </li>
+
                 {% endfor %}
+                <li class="sous">
+                  <a href="{{ path('app_logout') }}">Se déconnecter</a>
+                </li>
           </ul>
         </li>
     </ul>
