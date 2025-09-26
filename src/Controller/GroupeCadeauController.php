@@ -64,7 +64,7 @@ final class GroupeCadeauController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->flush();
 
-            return $this->redirectToRoute('app_groupe_cadeau_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_groupe_cadeau_show', ["id"=>$groupeCadeau->getId()], Response::HTTP_SEE_OTHER);
         }
 
         return $this->render('groupe_cadeau/edit.html.twig', [

@@ -2,6 +2,10 @@
 
 body {
     background-color: #DD2255 ;
+    font-family: "Montserrat";
+    font-weight: 300;
+    font-size: 20px;
+    color:black;
 }
 
 .menu-gauche{
@@ -53,6 +57,14 @@ body {
     color:#44000A;
   }
 
+  p{
+    margin-bottom: 0px;
+  }
+
+  strong{
+    font-weight: 700;
+  }
+
   h1::before{
     content: url('../images/flocon-fonce.svg');
     position: relative;
@@ -65,7 +77,7 @@ body {
   
   h2{
     font-family: "Shafarik", serif;
-    font-weight: 600;
+    font-weight: 500;
     font-size: 28px;
     font-style: normal;
     color:#44000A;
@@ -83,23 +95,29 @@ body {
 
   h3{
     font-family: "Shafarik", serif;
-    font-weight: 600;
+    font-weight: 400;
     font-size: 25px;
     font-style: normal;
     color:#44000A;
   }
 
   ul{
-    font-family: Arial, Helvetica, sans-serif;
-    font-weight: 400;
-    font-size: 20px;
-    font-style: normal;
     color:#44000A;
     list-style: url('../images/flocon.svg');
+
+    li{
+      color:black;
+      .content{
+        font-family: "Montserrat";
+        font-weight: 300;
+        font-size: 20px;
+        color:black;
+      }
+    }
   }
   
   a{
-      font-family: Arial, Helvetica, sans-serif;
+      font-family: "Montserrat";
       font-weight: 400;
       font-style: normal;
       color:#44000A;
@@ -152,6 +170,9 @@ body {
     background-color: #FD5D5B; /* Green */
     border: none;
     color: #44000A;
+    font-family: "Montserrat";
+    font-weight: 300;
+    font-size: 20px;
     text-align: center;
     padding: 5px;
     text-decoration: none;

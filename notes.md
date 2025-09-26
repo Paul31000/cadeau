@@ -61,6 +61,11 @@ encore_entry_script_tags('le nom declare dans webpack')
 
 ## TODO
 
-Tom select
-login
-Ajouter .env à la production
+[X] Tom select
+[X] login captcha
+[X] changer mdp
+[] ajouter des utilisatuer à un groupe de cadeau (après)
+[] ajouter rib et adresse postale à utilisateur
+[] choisir de rejoindre ou non un groupe créé
+
+[] Ajouter .env à la production

@@ -5,70 +5,77 @@
 {% block body %}
     <div class="container-fluid">
         <div class="row">
-            <div class="col-9">
+            <div class="col-9 p-3">
                 <h1>Cadeau</h1>
 
                 {# TODO dissocier pere noel de anniversaire #}
-                Cher père noël, je souhaite {{ cadeau.titre }}.
+                <p>
                 
-                {% if cadeau.urlRecomendee is not null %}
-                    <a target="_blank" href="{{ cadeau.urlRecomendee }}">J'en ai vu des beaux la:</a>
-                {% endif %}
+                    Cher père noël, je souhaite un/une <strong>{{ cadeau.titre }}</strong>.&nbsp;
+                    
+                    {% if cadeau.urlRecomendee is not null %}
+                        <a target="_blank" href="{{ cadeau.urlRecomendee }}">J'en ai vu des beaux là.</a>&nbsp;
+                    {% endif %}
 
-                Comme je suis capricieux je le préfère: {{ cadeau.taille ?? "il n'y a pas de taille préférée" }}.
-                Le Cadeau vaut: {{cadeau.prix}}.
+                    Comme je suis capricieux je le préfère en/avec 
+                    <strong>{{ cadeau.taille ?? "Il n'y a pas de détails préférés" }}</strong>.&nbsp;
+                    Le Cadeau vaut: <strong>{{cadeau.prix}}</strong>.&nbsp;
 
-                {% set montantCouvert = 0 %}
-                {% for utilisateurOffre in cadeau.utilisateurOffres %}
-                    {% set montantCouvert = utilisateurOffre.montant + montantCouvert %}
-                {% endfor %}
-                Montant couvert {{montantCouvert}}.
+                    {% set montantCouvert = 0 %}
+                    {% for utilisateurOffre in cadeau.utilisateurOffres %}
+                        {% set montantCouvert = utilisateurOffre.montant + montantCouvert %}
+                    {% endfor %}
+                    Montant couvert <strong>{{montantCouvert}}</strong>.&nbsp;
+                    Merci bon papa noël!!!
+                </p>
                 
                 {% if not estDemandeur %}
-                    <h2 class='pt-4'>Commentaires:</h2>
-                    {{ render(controller('App\\Controller\\MessageController::index', {'idEntiteeLiee':cadeau.id, 'entiteeLiee':'cadeau'})) }} 
+                    <h2 class='pt-5'>Commentaires:</h2>
+                    <div class="ps-1">
+                        {{ render(controller('App\\Controller\\MessageController::index', {'idEntiteeLiee':cadeau.id, 'entiteeLiee':'cadeau'})) }} 
 
-                    
-                    <h3 class='pt-4'>Je poste un commentaire:</h3>
-                    {{ render(controller('App\\Controller\\MessageController::new', {'idEntiteeLiee':cadeau.id, 'entiteeLiee':'cadeau'})) }} 
+                        
+                        <h3 class='pt-3'>Je poste un commentaire:</h3>
+                        {{ render(controller('App\\Controller\\MessageController::new', {'idEntiteeLiee':cadeau.id, 'entiteeLiee':'cadeau'})) }} 
+                    </div>
 
-                    <h2 class='pt-4'>J'offre:</h2>
+                    <h2 class='pt-5'>J'offre:</h2>
+                    <div class="ps-1">
+                        <h3 class=''>Utilisateurs offrant:</h3>
+                        <ul>
+                            {% if cadeau.utilisateurOffres|length > 0 %}
+                                {% for utilisateurOffre in cadeau.utilisateurOffres %}
+                                    <li>{{utilisateurOffre.utilisateurConcerne.pseudo}}</li>
+                                {% endfor %}
+                            {% else %}
+                                <li>Il n'y a pas encore de personnes offrant. Faites une proposition de prix.</li>
+                            {% endif %}
+                        </ul>
 
-                    <h3>Utilisateurs offrant:</h3>
-                    <ul>
-                        {% if cadeau.utilisateurOffres|length > 0 %}
-                            {% for utilisateurOffre in cadeau.utilisateurOffres %}
-                                <li>{{utilisateurOffre.utilisateurConcerne.pseudo}}</li>
-                            {% endfor %}
-                        {% else %}
-                            <li>Il n'y a pas encore de personnes offrant. Faites une proposition de prix.</li>
-                        {% endif %}
-                    </ul>
+                        <h3 class='pt-3'>J'ai regardé le prix:</h3>
+                        {{ render(controller('App\\Controller\\CadeauController::jairegarde', {'id':cadeau.id})) }} 
 
-                    <h3 class='pt-4'>J'ai regardé le prix:</h3>
-                    {{ render(controller('App\\Controller\\CadeauController::jairegarde', {'id':cadeau.id})) }} 
-
-                    <h3 class='pt-4'>J'offre:</h3>
-                    {{ render(controller('App\\Controller\\CadeauController::jePrends', {'id':cadeau.id})) }} 
-
+                        <h3 class='pt-3'>J'offre:</h3>
+                        {{ render(controller('App\\Controller\\CadeauController::jePrends', {'id':cadeau.id})) }} 
+                    </div>
                 {% endif %}
                     {# TODO Je prends plus le cadeau #}
                     {# TODO dissocier les utilisateurs qui achetent des utilisateurs qui cotisent #}
-                <br>
-                <br>
-                <br>
                 
             </div>
 
-            <div class="col-3">
-                Cadeaux dans la liste de: {{cadeau.listeCadeau.utilisateur}}
+            <div class="col-3 p-3">
+                <h2>Cadeaux dans la liste de: {{cadeau.listeCadeau.utilisateur}}</h2>
                 <ul>
                     {% for cadeau in cadeau.listeCadeau.cadeaux %}
                         <li>
                             <a href="{{ path('app_cadeau_show', {'id': cadeau.id}) }}">
                                 {{cadeau.titre}} 
                             </a>
-                            {{cadeau.prix}}€
+                            {% if cadeau.prix is not null %}
+                                &nbsp;
+                                ({{cadeau.prix}})
+                            {% endif %}
                         </li>
                     {% endfor %}
                 </ul>

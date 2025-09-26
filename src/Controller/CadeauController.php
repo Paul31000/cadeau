@@ -94,7 +94,7 @@ final class CadeauController extends AbstractController
         $form = $this
                         ->createFormBuilder()
                         ->setAction($this->generateUrl('app_cadeau_je_prends',['id'=>$cadeau->getId()]))
-                        ->add('cadeau_prix',NumberType::class,['mapped'=>false])
+                        ->add('a_hauteur_de',NumberType::class,['mapped'=>false])
                         ->getForm();
         
         $form->handleRequest($request);
@@ -102,13 +102,13 @@ final class CadeauController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $utilisateurOffre=$this->returnUserOffre($cadeau,$this->getUser());
             
-            if(!$utilisateurOffre==null){
+            if($utilisateurOffre==null){
                 $utilisateurOffre=new UtilisateurOffre;
                 $utilisateurOffre->setUtilisateurConcerne($this->getUser());
                 $cadeau->addUtilisateurOffre($utilisateurOffre);
             }
             
-            $utilisateurOffre->setMontant($request->get('form')["cadeau_prix"]);
+            $utilisateurOffre->setMontant($request->get('form')["a_hauteur_de"]);
 
             $entityManager->persist($utilisateurOffre);
             $entityManager->persist($cadeau);
@@ -128,14 +128,14 @@ final class CadeauController extends AbstractController
         $form = $this
                     ->createFormBuilder()
                     ->setAction($this->generateUrl('app_cadeau_jai_regarde',['id'=>$cadeau->getId()]))
-                    ->add('cadeau_prix',NumberType::class,['mapped'=>false])
+                    ->add('Prix_du_cadeau',NumberType::class,['mapped'=>false])
                     ->getForm();
 
         $form->handleRequest($request);
         
         
         if ($form->isSubmitted() && $form->isValid()) {
-            $cadeau->setPrix($request->get('form')["cadeau_prix"]);
+            $cadeau->setPrix($request->get('form')["Prix_du_cadeau"]);
             $entityManager->persist($cadeau);
             $entityManager->flush();
             
@@ -150,7 +150,8 @@ final class CadeauController extends AbstractController
 
     public function returnUserOffre(Cadeau $cadeau, User $user):?UtilisateurOffre{
         foreach($cadeau->getUtilisateurOffres() as $utilisateurOffre){
-            if($utilisateurOffre->getUtilisateurConcerne()){
+            if($utilisateurOffre->getUtilisateurConcerne()==$user){
+                dump('ok');
                 return $utilisateurOffre;
             }
         }

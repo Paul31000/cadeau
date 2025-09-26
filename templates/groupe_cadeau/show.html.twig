@@ -10,11 +10,15 @@
         <div class="row g-3">
             <div class="col-12 d-flex justify-content-between p-3"> 
                 <h1>Groupe cadeau {{ groupe_cadeau.nomGroupe }}</h1>
-                <form class="pt-3" 
-                    action="{{ url('app_liste_cadeau_new', {'id': groupe_cadeau.id}) }}" method="post">
-                    <input  type="hidden" name="token" value="{{ csrf_token('app_liste_cadeau_new') }}"/>
-                    <button class="vert" type="submit">Ecrire ma lettre à Santa</button>
-                </form>
+                <div class="d-flex">
+                    <form class="pt-3 me-2" 
+                        action="{{ url('app_liste_cadeau_new', {'id': groupe_cadeau.id}) }}" method="post">
+                        <input  type="hidden" name="token" value="{{ csrf_token('app_liste_cadeau_new') }}"/>
+                        <button class="" type="submit">Ecrire ma lettre à Santa</button>
+                    </form>
+                    <a class="button-link mt-3" href="{{ path('app_groupe_cadeau_edit', {'id': groupe_cadeau.id}) }}">Modifier le groupe</a>
+                </div>
+
             </div>
 
             
@@ -30,7 +34,6 @@
                                         <a href="{{ path('app_cadeau_show', {'id': cadeau.id}) }}">
                                             {{cadeau.titre}} 
                                         </a>
-                                        {{cadeau.prix}}€
                                     </li>
                                 {% endfor %}
                             

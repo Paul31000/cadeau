@@ -2,10 +2,9 @@
 
 namespace App\Controller;
 
-use App\Entity\Message;
-use App\Form\MessageType;
-use App\Repository\MessageRepository;
 use DateTime;
+use App\Entity\Message;
+use App\Repository\MessageRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -13,6 +12,7 @@ use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 #[IsGranted('ROLE_AUTHENTIFIE')]
@@ -95,7 +95,8 @@ final class MessageController extends AbstractController
                             ->setAction($this->generateUrl('app_message_edit',
                                 ['id'=>$message->getId()]
                             ))
-                            ->add('text', TextType::class, [
+                            ->add('text', TextareaType::class, [
+                                'row_attr' => ['class' => 'text-editor'],
                                 'required'   => true,
                                 'label' => 'message:*',
                                 'sanitize_html' => true,

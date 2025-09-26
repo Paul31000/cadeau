@@ -5,12 +5,14 @@
         {% if messages|length > 0 %}
             {% for message in messages %}
                 <li>
-                    <h3 {% if loop.index != 1 %} class='pt-4' {% endif %}>
-                        Le <strong> {{ message.datePoste|date('d/m/Y') }} </strong>
-                        {{ message.utilisateurPoste.pseudo }}
-                        disait:
-                    </h3>
-                    {{ message.text }}
+                    <div class="content">
+                        <h3 {% if loop.index != 1 %} class='pt-4' {% endif %}>
+                            Le <strong> {{ message.datePoste|date_fr }} </strong>
+                            {{ message.utilisateurPoste.pseudo }}
+                            disait:
+                        </h3>
+                        <p>{{ message.text }}</p>
+                    </div>
                     <div class="d-flex align-items-start pt-4">
                         <a class="button-link petit" href="{{ path('app_message_edit', {'id': message.id}) }}">edit</a>
                         <form 
