@@ -33,9 +33,11 @@ final class UserController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            //dump($request->get('user')["password"]);
+
             $hashedPassword = $passwordHasher->hashPassword(
                 $user,
-                $request->get('user')["password"]
+                $request->get('user')["password"]['first']
             );
             $user->setPassword($hashedPassword);
             $user->addRole('ROLE_AUTHENTIFIE');

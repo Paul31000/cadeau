@@ -22,7 +22,7 @@ class UserType extends AbstractType
             ->add('email')
             ->add('pseudo')
             //todo
-            ->add('plainPassword', RepeatedType::class, [
+            ->add('password', RepeatedType::class, [
                 'type' => PasswordType::class,
                 'options' => [
                     'attr' => [
@@ -40,8 +40,8 @@ class UserType extends AbstractType
                             // max length allowed by Symfony for security reasons
                             'max' => 4096,
                         ]),
-                        new PasswordStrength(),
-                        new NotCompromisedPassword(),
+                        //new PasswordStrength(),
+                        //new NotCompromisedPassword(),
                     ],
                     'label' => 'New password',
                 ],
