@@ -232,6 +232,30 @@ body {
     top:-54px;
     position: relative;
   }
+
+  table{
+    text-align: center;
+    th {
+      background-color: #44000A;
+      color: white;
+    }
+    tbody{
+      tr:nth-child(even){
+        td{
+          background-color: #ffe9e9;
+          color:black;
+        }
+        
+      }
+      tr:nth-child(odd) {
+        td{
+          background-color: #ffc1c0;
+          color:black;
+        }
+      }
+    }
+    
+  }
 }
 
 

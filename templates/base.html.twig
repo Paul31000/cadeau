@@ -21,11 +21,30 @@
                         <div class="d-flex justify-content-center py-5">
                             {% include '/svgs/304509.svg.twig' %}
                         </div>
-                        <div>
-                            {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                        {% if is_granted('IS_AUTHENTICATED_FULLY') %} 
+                            <div>
                                 {{ render(controller('App\\Controller\\IndexController::menu')) }} 
-                            {% endif %}
-                        </div>
+                            </div>
+                        {% else %} 
+                        <nav>
+                            <ul class="d-flex flex-column">
+                                <li class="liste">
+                                Menu:
+                                <ul>
+                                        <li class="sous">
+                                            <a href="{{ path('app_login') }}" class="mx-4">S'authentifier</a>
+                                        </li>
+                                        <li class="sous">
+                                            <a href="{{ path('app_user_new') }}" class="mx-4">Créez votre compte</a>
+                                        </li>
+                                        <li class="sous">
+                                            <a href="{{ path('app_forgot_password_request') }}" class="mx-4">Père noël un trou de mémoire...?</a>
+                                        </li>
+                                </ul>
+                                </li>
+                            </ul>
+                        </nav>
+                        {% endif %}
                     </div>
                 </div>
                 <div class="col-12 page-border"></div>

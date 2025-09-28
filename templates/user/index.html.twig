@@ -1,37 +1,84 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}User index{% endblock %}
+{% block title %}Les lutins de l'atelier{% endblock %}
 
 {% block body %}
-    <h1>User index</h1>
+    <h1>Tous les lutins de l'atelier</h1>
+      <p>Ici vous retrouverez tous les utilisateur du site, et ceux qui vous ont 
+      fait la demande pour partager des listes avec vous, 
+      et voir vos coordonnées. </p>
 
+      <br>
+
+    <h2>Ces lutins ont décidé de travailler pour vous.</h2>
+    
+
+    <p>Ce sont les utilisateurs qui vous ont fait une demande pour vous ajouter
+     à des groupes de cadeaux. Et voir vos coordonnées.</p>
+
+    <br>
     <table class="table">
         <thead>
             <tr>
-                <th>Id</th>
-                <th>Email</th>
-                <th>Roles</th>
-                <th>actions</th>
+                <th>pseudo</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for user in demandes %}
+            <tr>
+                <td>{{ user.pseudo }}</td>
+                <td>
+                    <form method="post" action="{{ path('app_user_confirm_ami', {'id': user.id}) }}" onsubmit="return confirm('Voulez vous accepter ce lutin?');">
+                        <input type="hidden" name="_token" value="{{ csrf_token('confirmer_ami' ~ user.id) }}">
+                        <button class="btn">Confirmer c'est mon lutin</button>
+                    </form>
+                    <form method="post" action="{{ path('app_user_delete_ami', {'id': user.id}) }}" onsubmit="return confirm('Voulez vous vraiment refuser?');">
+                        <input type="hidden" name="_token" value="{{ csrf_token('refuser_ami' ~ user.id) }}">
+                        <button class="btn">Refuser ce n'est pas mon lutin désolé</button>
+                    </form>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="5">Aucun lutin n'a demandé de travailler pour vous, ajoutez des lutins!</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+  
+    <h2>Tous les lutins du site.</h2>
+
+    <p>Voici tous les utilisateurs du site. Vous pouvez leur demander une validation,
+     pour échanger autour de listes de cadeaux ou qu'ils voient vos coordonnées.</p>
+    
+    <br>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Pseudo</th>
+                <th>Actions</th>
             </tr>
         </thead>
         <tbody>
         {% for user in users %}
             <tr>
-                <td>{{ user.id }}</td>
-                <td>{{ user.email }}</td>
-                <td>{{ user.roles ? user.roles|json_encode : '' }}</td>
+                <td>{{ user.pseudo }}</td>
                 <td>
-                    <a href="{{ path('app_user_show', {'id': user.id}) }}">show</a>
-                    <a href="{{ path('app_user_edit', {'id': user.id}) }}">edit</a>
+                    <form method="post" action="{{ path('app_requete_ami', {'id': user.id}) }}" onsubmit="return confirm('Voulez vous demander à ce lutin de se connecter?');">
+                        <input type="hidden" name="_token" value="{{ csrf_token('requete_ami' ~ user.id) }}">
+                        <button class="btn">envoyer une demande au lutin</button>
+                    </form>
                 </td>
             </tr>
         {% else %}
             <tr>
-                <td colspan="5">no records found</td>
+                <td colspan="5">Il n'y a personne sur le site. L'hébergeur ou un pirate a tout cassé. ;)</td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
 
-    <a href="{{ path('app_user_new') }}">Create new</a>
+   
+
 {% endblock %}

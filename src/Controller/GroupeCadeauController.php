@@ -29,12 +29,21 @@ final class GroupeCadeauController extends AbstractController
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
         $groupeCadeau = new GroupeCadeau();
-        $form = $this->createForm(GroupeCadeauType::class, $groupeCadeau);
+        $form = $this->createForm(GroupeCadeauType::class, $groupeCadeau,['users'=>$this->getUser()->getAmi()]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $groupeCadeau->setTypeGroupe("GroupeNoel");
             $groupeCadeau->addUtilisateursConcerne($this->getUser());
+            foreach($groupeCadeau->getutilisateurConcernes() as $util){
+                foreach($groupeCadeau->getutilisateurConcernes() as $util2){
+                    $util->addAmi($util2);
+                    $util2->addAmi($util);
+                    $entityManager->persist($util2);
+                    $entityManager->persist($util);        
+                }
+            }
+
             $entityManager->persist($groupeCadeau);
             $entityManager->flush();
 

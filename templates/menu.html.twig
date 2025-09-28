@@ -6,18 +6,22 @@
         <li class="liste">
           Menu:
           <ul>
-                <li class="sous">
-                    <a href="{{ path('app_groupe_cadeau_new') }}" >Nouveau groupe cadeau</a>
-                </li>
-                {% for groupeCadeaux in groupesCadeaux %}
+                
                   <li class="sous">
-                      <a href="{{ path('app_groupe_cadeau_show',{'id': groupeCadeaux.id}) }}" >{{groupeCadeaux.nomGroupe}}</a>
+                      <a href="{{ path('app_groupe_cadeau_new') }}" >Nouveau groupe cadeau</a>
                   </li>
+                  {% for groupeCadeaux in groupesCadeaux %}
+                    <li class="sous">
+                        <a href="{{ path('app_groupe_cadeau_show',{'id': groupeCadeaux.id}) }}" >{{groupeCadeaux.nomGroupe}}</a>
+                    </li>
 
-                {% endfor %}
-                <li class="sous">
-                  <a href="{{ path('app_logout') }}">Se déconnecter</a>
-                </li>
+                  {% endfor %}
+                  <li class="sous">
+                    <a href="{{ path('app_user_index') }}">Gérer ses lutins</a>
+                  </li>
+                  <li class="sous">
+                    <a href="{{ path('app_logout') }}">Se déconnecter</a>
+                  </li>
           </ul>
         </li>
     </ul>

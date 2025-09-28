@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Groupe cadeau {{ groupe_cadeau.nomGroupe }}{% endblock %}
+{% block title %}{{ groupe_cadeau.nomGroupe }}{% endblock %}
 
 {% block body %}
 
@@ -27,7 +27,7 @@
                     {% if listeCadeaux.utilisateur != app.user %}
                 
                         <div class="col-3">
-                            <h2>Liste de {{listeCadeaux.utilisateur.pseudo}}</h2>
+                            <h2>Liste de <a href="{{ path('app_user_show', {'id': listeCadeaux.utilisateur.id}) }}">{{listeCadeaux.utilisateur.pseudo}}</a></h2>
                             <ul>
                                 {% for cadeau in listeCadeaux.cadeaux %}
                                     <li>

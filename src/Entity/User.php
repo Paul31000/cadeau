@@ -6,6 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 use App\Repository\UserRepository;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\ORM\Mapping\JoinTable;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
@@ -88,6 +89,23 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(targetEntity: ListeCadeau::class, mappedBy: 'userA')]
     private Collection $listeCadeaus;
 
+    /**
+     * @var Collection<int, self>
+     */
+    #[ORM\ManyToMany(targetEntity: self::class)]
+    #[JoinTable("jointable_user_user_ami")]
+    private Collection $ami;
+
+    #[ORM\Column(length: 500, nullable: true)]
+    private ?string $adresse = null;
+
+    /**
+     * @var Collection<int, self>
+     */
+    #[ORM\ManyToMany(targetEntity: self::class)]
+    #[JoinTable("jointable_user_user_ami_demande")]
+    private Collection $amiDemande;
+
     public function __construct()
     {
         $this->estLeDestinataire = new ArrayCollection();
@@ -97,6 +115,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->offre = new ArrayCollection();
         $this->utilisateurOffres = new ArrayCollection();
         $this->listeCadeaus = new ArrayCollection();
+        $this->ami = new ArrayCollection();
+        $this->amiDemande = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -398,6 +418,66 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
                 $listeCadeau->setUserA(null);
             }
         }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, self>
+     */
+    public function getAmi(): Collection
+    {
+        return $this->ami;
+    }
+
+    public function addAmi(self $ami): static
+    {
+        if (!$this->ami->contains($ami)) {
+            $this->ami->add($ami);
+        }
+
+        return $this;
+    }
+
+    public function removeAmi(self $ami): static
+    {
+        $this->ami->removeElement($ami);
+
+        return $this;
+    }
+
+    public function getAdresse(): ?string
+    {
+        return $this->adresse;
+    }
+
+    public function setAdresse(?string $adresse): static
+    {
+        $this->adresse = $adresse;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, self>
+     */
+    public function getAmiDemande(): Collection
+    {
+        return $this->amiDemande;
+    }
+
+    public function addAmiDemande(self $amiDemande): static
+    {
+        if (!$this->amiDemande->contains($amiDemande)) {
+            $this->amiDemande->add($amiDemande);
+        }
+
+        return $this;
+    }
+
+    public function removeAmiDemande(self $amiDemande): static
+    {
+        $this->amiDemande->removeElement($amiDemande);
 
         return $this;
     }

@@ -5,6 +5,7 @@ namespace App\Form;
 use App\Entity\User;
 use App\Entity\GroupeCadeau;
 use App\Repository\UserRepository;
+use Doctrine\Common\Collections\Collection;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -40,7 +41,7 @@ class GroupeCadeauType extends AbstractType
 
             ->add('utilisateurConcernes', EntityType::class, [
                 'required' => true,
-                'choices'=>$users,
+                'choices'=>$options['users'],
                 'multiple'=>true,
                 'label' => 'Utilisateurs du groupe:*',
                 'class' => User::class,
@@ -55,6 +56,7 @@ class GroupeCadeauType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => GroupeCadeau::class,
+            'users'=>Collection::class
         ]);
     }
 }

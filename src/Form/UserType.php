@@ -22,6 +22,7 @@ class UserType extends AbstractType
             ->add('email')
             ->add('pseudo')
             //todo
+            ->add('adresse')
             ->add('password', RepeatedType::class, [
                 'type' => PasswordType::class,
                 'options' => [

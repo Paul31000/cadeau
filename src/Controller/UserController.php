@@ -19,9 +19,13 @@ final class UserController extends AbstractController
     #[Route(name: 'app_user_index', methods: ['GET'])]
     public function index(UserRepository $userRepository): Response
     {
-        $this->denyAccessUnlessGranted('ROLE_ADMIN');
+        $this->denyAccessUnlessGranted('ROLE_AUTHENTIFIE');
+        
+        $demandes=$this->getUser()->getAmiDemande();
+        
         return $this->render('user/index.html.twig', [
             'users' => $userRepository->findAll(),
+            'demandes' => $demandes,
         ]);
     }
 
@@ -82,7 +86,7 @@ final class UserController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'app_user_delete', methods: ['POST'])]
+    /* #[Route('/{id}', name: 'app_user_delete', methods: ['POST'])]
     public function delete(Request $request, User $user, EntityManagerInterface $entityManager): Response
     {
         $this->denyAccessUnlessGranted('ROLE_ADMIN');
@@ -92,5 +96,49 @@ final class UserController extends AbstractController
         }
 
         return $this->redirectToRoute('app_user_index', [], Response::HTTP_SEE_OTHER);
+    } */
+
+    #[Route('/requeteLutin/{id}', name: 'app_requete_ami', methods: ['POST'])]
+    public function addLutin(Request $request, User $user, EntityManagerInterface $entityManager): Response
+    {
+        $this->denyAccessUnlessGranted('ROLE_AUTHENTIFIE');
+        if ($this->isCsrfTokenValid('requete_ami'.$user->getId(), $request->getPayload()->getString('_token'))) {
+            $user->addAmiDemande($this->getUser());
+            $entityManager->flush();
+        }
+
+        return $this->redirectToRoute('app_user_index', [], Response::HTTP_SEE_OTHER);
     }
+
+    #[Route('/confirmerLutin/{id}', name: 'app_user_confirm_ami', methods: ['POST'])]
+    public function confirmerLutin(Request $request, User $user, EntityManagerInterface $entityManager): Response
+    {
+        $this->denyAccessUnlessGranted('ROLE_AUTHENTIFIE');
+        if ($this->isCsrfTokenValid('confirmer_ami'.$user->getId(), $request->getPayload()->getString('_token'))) {
+            foreach($this->getUser()->getAmiDemande() as $ami){
+                if($ami->getId()==$user->getId()){
+                    $this->getUser()->addAmi($user);
+                    $user->addAmi($this->getUser());
+                    $this->getUser()->removeAmiDemande($user);
+                    $entityManager->flush();
+                }  
+            }
+            
+        }
+
+        return $this->redirectToRoute('app_user_index', [], Response::HTTP_SEE_OTHER);
+    }
+
+    #[Route('supprimerLutin/{id}', name: 'app_user_delete_ami', methods: ['POST'])]
+    public function supprimerLutin(Request $request, User $user, EntityManagerInterface $entityManager): Response
+    {
+        $this->denyAccessUnlessGranted('ROLE_AUTHENTIFIE');
+        if ($this->isCsrfTokenValid('refuser_ami'.$user->getId(), $request->getPayload()->getString('_token'))) {
+            $user->removeAmiDemande($this->getUser());
+            $entityManager->flush();
+        }
+
+        return $this->redirectToRoute('app_user_index', [], Response::HTTP_SEE_OTHER);
+    } 
+
 }
