@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\GroupeCadeau;
 use App\Form\GroupeCadeauType;
 use App\Repository\GroupeCadeauRepository;
+use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -29,6 +30,8 @@ final class GroupeCadeauController extends AbstractController
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
         $groupeCadeau = new GroupeCadeau();
+        $groupeCadeau->setDateCreation(new DateTime());
+        
         $form = $this->createForm(GroupeCadeauType::class, $groupeCadeau,['users'=>$this->getUser()->getAmi()]);
         $form->handleRequest($request);
 

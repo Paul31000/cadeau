@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\CadeauRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: CadeauRepository::class)]
@@ -45,6 +46,9 @@ class Cadeau
 
     #[ORM\Column(nullable: true)]
     private ?int $prix = null;
+
+    #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
+    private ?\DateTimeInterface $date = null;
 
     
 
@@ -181,6 +185,18 @@ class Cadeau
     public function setPrix(?int $prix): static
     {
         $this->prix = $prix;
+
+        return $this;
+    }
+
+    public function getDate(): ?\DateTimeInterface
+    {
+        return $this->date;
+    }
+
+    public function setDate(?\DateTimeInterface $date): static
+    {
+        $this->date = $date;
 
         return $this;
     }

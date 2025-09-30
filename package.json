@@ -26,6 +26,7 @@
     },
     "dependencies": {
         "asset-mapper": "^1.0.2",
+        "file-loader": "^6.2.0",
         "less-loader": "^12.2.0",
         "node-sass": "^9.0.0",
         "sass-loader": "^16.0.4",

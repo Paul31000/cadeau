@@ -1,0 +1,62 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Créez votre compte{% endblock %}
+
+{% block body %}  
+    
+  <h1>Presentation du site</h1>
+  
+  <p>Ce site à pour but de partager et d'interagir
+     autour de listes de cadeaux. Pour protéger votre 
+     email et votre adresse, vous devez faire une demande de connexion 
+     avec la ou les personne(s) dont vous voulez partager un évenement. 
+     Créer le groupe et ajouter les personnes concernées. Et commencer à 
+     formuler vos voeux (écrire ma lettre à santa) propres au groupe. Après
+    vous pourrez vous désigner comme personne responsable de l'achat du cadeau. 
+    Ou simple cotisant (à hauteur de montant). 
+    </p>
+    <br>
+  
+  <h3 class='titre_image'>ici les listes de cadeau:</h3>
+    <img
+        class="fit-picture"
+        src="{{ asset('build/images/liste.png') }}"
+        alt="ici des liste de cadeau" />
+    <br>
+
+    <h3 class='titre_image'>ici les interactions autour d'un cadeau:</h3>
+    <img
+        class="fit-picture"
+        src="{{ asset('build/images/interaction_cadeau.png') }}"
+        alt="ici une vue de cadeau pour interagir entre utilisateurs" />
+
+    <br>
+
+    <h3 class='titre_image'>ici les interaction autour d'un cadeau (bas de page):</h3>
+    <img
+        class="fit-picture"
+        src="{{ asset('build/images/interaction_cadeau2.png') }}"
+        alt="ici une vue de cadeau pour interagir entre utilisateurs" />
+    <br>
+
+    <h3 class='titre_image'>ici une vue pour creer des souhaits:</h3>
+    <img
+        class="fit-picture"
+        src="{{ asset('build/images/nouveau_cadeau.png') }}"
+        alt="ici la vue pour creer un souhait de cadeau" />
+    <br>
+
+    <h3 class='titre_image'>ici le controle des amis sur le site:</h3>
+    <img
+        class="fit-picture"
+        src="{{ asset('build/images/ajouter_personnes.png') }}"
+        alt="ici le controle des personnes ajouter amis" />
+    <br>
+
+    <h3 class='titre_image'>ici le profil d'une personne:</h3>
+    <img
+        class="fit-picture"
+        src="{{ asset('build/images/vue_utilisateur.png') }}"
+        alt="ici le profil d'une personne avec adresse" />
+
+{% endblock %}

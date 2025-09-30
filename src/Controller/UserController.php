@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\User;
 use App\Form\UserType;
 use App\Repository\UserRepository;
+use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -45,7 +46,8 @@ final class UserController extends AbstractController
             );
             $user->setPassword($hashedPassword);
             $user->addRole('ROLE_AUTHENTIFIE');
-    
+            $user->setDateCreation(new DateTime());
+
             $entityManager->persist($user);
             $entityManager->flush();
 

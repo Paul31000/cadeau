@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\GroupeCadeauRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: GroupeCadeauRepository::class)]
@@ -32,6 +33,9 @@ class GroupeCadeau
      */
     #[ORM\OneToMany(targetEntity: ListeCadeau::class, mappedBy: 'groupeCadeau')]
     private Collection $listeCadeaux;
+
+    #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
+    private ?\DateTimeInterface $dateCreation = null;
 
     public function __construct()
     {
@@ -118,6 +122,18 @@ class GroupeCadeau
                 $listeCadeaux->setGroupeCadeau(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getDateCreation(): ?\DateTimeInterface
+    {
+        return $this->dateCreation;
+    }
+
+    public function setDateCreation(?\DateTimeInterface $dateCreation): static
+    {
+        $this->dateCreation = $dateCreation;
 
         return $this;
     }

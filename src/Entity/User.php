@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\UserRepository;
 use Doctrine\Common\Collections\Collection;
@@ -105,6 +106,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\ManyToMany(targetEntity: self::class)]
     #[JoinTable("jointable_user_user_ami_demande")]
     private Collection $amiDemande;
+
+    #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
+    private ?\DateTimeInterface $dateConnexion = null;
+
+    #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
+    private ?\DateTimeInterface $dateCreation = null;
 
     public function __construct()
     {
@@ -478,6 +485,30 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function removeAmiDemande(self $amiDemande): static
     {
         $this->amiDemande->removeElement($amiDemande);
+
+        return $this;
+    }
+
+    public function getDateConnexion(): ?\DateTimeInterface
+    {
+        return $this->dateConnexion;
+    }
+
+    public function setDateConnexion(?\DateTimeInterface $dateConnexion): static
+    {
+        $this->dateConnexion = $dateConnexion;
+
+        return $this;
+    }
+
+    public function getDateCreation(): ?\DateTimeInterface
+    {
+        return $this->dateCreation;
+    }
+
+    public function setDateCreation(?\DateTimeInterface $dateCreation): static
+    {
+        $this->dateCreation = $dateCreation;
 
         return $this;
     }

@@ -7,6 +7,7 @@ use App\Entity\Cadeau;
 use App\Form\CadeauType;
 use App\Entity\ListeCadeau;
 use App\Entity\UtilisateurOffre;
+use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -29,7 +30,7 @@ final class CadeauController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            
+            $cadeau->setDate(new DateTime());
             $entityManager->persist($cadeau);
             $entityManager->flush();
 
