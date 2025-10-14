@@ -23,17 +23,17 @@
                 <td>{{ cadeau.taille }}</td>
                 <td>{{ cadeau.commentaires }}</td>
                 <td>
-                    <a href="{{ path('app_cadeau_show', {'id': cadeau.id}) }}">show</a>
-                    <a href="{{ path('app_cadeau_edit', {'id': cadeau.id}) }}">edit</a>
+                    <a href="{{ path('app_cadeau_show', {'id': cadeau.id}) }}">Montrer</a>
+                    <a href="{{ path('app_cadeau_edit', {'id': cadeau.id}) }}">Editer</a>
                 </td>
             </tr>
         {% else %}
             <tr>
-                <td colspan="5">no records found</td>
+                <td colspan="5">Aucun cadeau pour l'instant.</td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
 
-    <a href="{{ path('app_cadeau_new') }}">Create new</a>
+    <a href="{{ path('app_cadeau_new') }}">Creer un groupe cadeau.</a>
 {% endblock %}

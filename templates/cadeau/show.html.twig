@@ -14,10 +14,10 @@
                     Cher père noël, je souhaite un/une <strong>{{ cadeau.titre }}</strong>.&nbsp;
                     
                     {% if cadeau.urlRecomendee is not null %}
-                        <a target="_blank" href="{{ cadeau.urlRecomendee }}">J'en ai vu des beaux là.</a>&nbsp;
+                        <a target="_blank" href="{{ cadeau.urlRecomendee }}">Cliquez ici pour voir le site proposant le cadeau.</a>&nbsp;
                     {% endif %}
 
-                    Comme je suis capricieux je le préfère en/avec 
+                    Mes préférences pour le cadeau sont: 
                     <strong>{{ cadeau.taille ?? "Il n'y a pas de détails préférés" }}</strong>.&nbsp;
                     Le Cadeau vaut: <strong>{{cadeau.prix}}</strong>.&nbsp;
 
