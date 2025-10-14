@@ -152,7 +152,6 @@ final class CadeauController extends AbstractController
     public function returnUserOffre(Cadeau $cadeau, User $user):?UtilisateurOffre{
         foreach($cadeau->getUtilisateurOffres() as $utilisateurOffre){
             if($utilisateurOffre->getUtilisateurConcerne()==$user){
-                dump('ok');
                 return $utilisateurOffre;
             }
         }

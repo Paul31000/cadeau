@@ -137,6 +137,7 @@ body {
     color:#44000A;
     list-style: url('../images/flocon.svg');
 
+
     li{
       color:black;
       .content{
@@ -150,11 +151,17 @@ body {
   
   a{
       font-family: "Montserrat";
-      font-weight: 400;
+      font-weight: 500;
       font-style: normal;
-      color:#44000A;
-      text-decoration:underline;
+      color:#af3e3c;
+      text-decoration:none;
   }
+
+  a:hover{
+    color:#FCCA6F;
+    background-color: #DD2255;
+    border-radius: 100px;
+}
 
   button{
     border-radius: 500px;
@@ -168,7 +175,12 @@ body {
     font-size: 16px;
   }
 
-  button:hover{
+  button:hover {
+    background-color: #44000A; 
+    color:#FFFFFF;
+  }
+
+  .button-link.petit:hover {
     background-color: #44000A; 
     color:#FFFFFF;
   }
@@ -185,15 +197,9 @@ body {
     font-size: 16px;
   }
 
-  button.petit{
+  .petit{
     border-radius: 500px;
-    background-color: #FD5D5B; /* Green */
-    border: none;
-    color: #44000A;
     padding: 5px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
     font-size: 16px;
   }
 

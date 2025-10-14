@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Père noël rentrez dans votre atelier.{% endblock %}
+{% block title %}Login.{% endblock %}
     
 
 {% block body %}
@@ -15,7 +15,7 @@
             </div>
         {% endif %}
 
-        <h1 class="h3 mb-3 font-weight-normal">Père noël rentrez dans votre atelier.</h1>
+        <h1 class="h3 mb-3 font-weight-normal">Login.</h1>
         <label for="username">Pseudo:</label>
         <input type="text" value="{{ last_username }}" name="_username" id="username" class="form-control" required autofocus>
         <label for="password">Mot de passe:</label>
@@ -42,7 +42,7 @@
 
             <a href="{{ path('app_user_new') }}" class="mx-4">Créez votre compte</a>
 
-            <a href="{{ path('app_forgot_password_request') }}" class="mx-4">Père noël un trou de mémoire...?</a>
+            <a href="{{ path('app_forgot_password_request') }}" class="mx-4">Réinitialisez votre mot de passe</a>
         </div>
     </form>
 {% endblock %}

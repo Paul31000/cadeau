@@ -14,7 +14,7 @@
                     <form class="pt-3 me-2" 
                         action="{{ url('app_liste_cadeau_new', {'id': groupe_cadeau.id}) }}" method="post">
                         <input  type="hidden" name="token" value="{{ csrf_token('app_liste_cadeau_new') }}"/>
-                        <button class="" type="submit">Ecrire ma lettre à Santa</button>
+                        <button class="" type="submit">Créer ou éditer ma liste de cadeaux</button>
                     </form>
                     <a class="button-link mt-3" href="{{ path('app_groupe_cadeau_edit', {'id': groupe_cadeau.id}) }}">Modifier le groupe</a>
                 </div>

@@ -1,9 +1,9 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}GroupeCadeau index{% endblock %}
+{% block title %}Groupe cadeau index{% endblock %}
 
 {% block body %}
-    <h1>GroupeCadeau index</h1>
+    <h1>Groupe cadeau index</h1>
     
     {# <a href="{{ path('app_groupe_cadeau_show', {'id': groupe_cadeaus.id}) }}">show</a> #}
 
@@ -11,8 +11,8 @@
         <thead>
             <tr>
                 <th>Id</th>
-                <th>TypeGroupe</th>
-                <th>actions</th>
+                <th>Type groupe</th>
+                <th>Actions</th>
             </tr>
         </thead>
         <tbody>
@@ -21,17 +21,17 @@
                 <td>{{ groupe_cadeau.id }}</td>
                 <td>{{ groupe_cadeau.typeGroupe }}</td>
                 <td>
-                    <a href="{{ path('app_groupe_cadeau_show', {'id': groupe_cadeau.id}) }}">show</a>
-                    <a href="{{ path('app_groupe_cadeau_edit', {'id': groupe_cadeau.id}) }}">edit</a>
+                    <a href="{{ path('app_groupe_cadeau_show', {'id': groupe_cadeau.id}) }}">montrer</a>
+                    <a href="{{ path('app_groupe_cadeau_edit', {'id': groupe_cadeau.id}) }}">editer</a>
                 </td>
             </tr>
         {% else %}
             <tr>
-                <td colspan="3">no records found</td>
+                <td colspan="3">Il n'y a rien ici.</td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
 
-    <a href="{{ path('app_groupe_cadeau_new') }}">Create new</a>
+    <a href="{{ path('app_groupe_cadeau_new') }}">Créer nouveau</a>
 {% endblock %}

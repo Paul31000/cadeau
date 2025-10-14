@@ -3,14 +3,9 @@
 {% block title %}Les lutins de l'atelier{% endblock %}
 
 {% block body %}
-    <h1>Tous les lutins de l'atelier</h1>
-      <p>Ici vous retrouverez tous les utilisateur du site, et ceux qui vous ont 
-      fait la demande pour partager des listes avec vous, 
-      et voir vos coordonnées. </p>
+    <h1>Tous les utilisateurs:</h1>
 
-      <br>
-
-    <h2>Ces lutins ont décidé de travailler pour vous.</h2>
+    <h2>Les utilisateurs souhaitant une mise en contact.</h2>
     
 
     <p>Ce sont les utilisateurs qui vous ont fait une demande pour vous ajouter
@@ -41,16 +36,16 @@
             </tr>
         {% else %}
             <tr>
-                <td colspan="5">Aucun lutin n'a demandé de travailler pour vous, ajoutez des lutins!</td>
+                <td colspan="5">Aucun utilisateur n'a souhaité être en relation avec vous pour l'instant.</td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
   
-    <h2>Tous les lutins du site.</h2>
+    <h2>Tous les utilisateurs du site.</h2>
 
     <p>Voici tous les utilisateurs du site. Vous pouvez leur demander une validation,
-     pour échanger autour de listes de cadeaux ou qu'ils voient vos coordonnées.</p>
+     pour échanger autour de listes de cadeaux ou qu'ils voient vos coordonnées. Demandez leur leur pseudo.</p>
     
     <br>
     <table class="table">
@@ -67,7 +62,7 @@
                 <td>
                     <form method="post" action="{{ path('app_requete_ami', {'id': user.id}) }}" onsubmit="return confirm('Voulez vous demander à ce lutin de se connecter?');">
                         <input type="hidden" name="_token" value="{{ csrf_token('requete_ami' ~ user.id) }}">
-                        <button class="btn">envoyer une demande au lutin</button>
+                        <button class="btn">envoyer une demande</button>
                     </form>
                 </td>
             </tr>
