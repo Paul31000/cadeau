@@ -22,9 +22,7 @@ class GroupeCadeauType extends AbstractType
 
     public function buildForm(FormBuilderInterface $builder, array $options ): void
     {
-        $users= $this->utilRep->findAll();
        
-
         $builder
             ->add('nomGroupe')
             /* ->add('typeGroupe', ChoiceType::class, [

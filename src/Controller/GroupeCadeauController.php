@@ -70,7 +70,8 @@ final class GroupeCadeauController extends AbstractController
     #[Route('/{id}/edit', name: 'app_groupe_cadeau_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, GroupeCadeau $groupeCadeau, EntityManagerInterface $entityManager): Response
     {
-        $form = $this->createForm(GroupeCadeauType::class, $groupeCadeau);
+        //dump($groupeCadeau->getutilisateurConcernes());
+        $form = $this->createForm(GroupeCadeauType::class, $groupeCadeau,['users'=>$this->getUser()->getAmi()]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {

@@ -4,7 +4,7 @@ body {
     background-color: #DD2255 ;
     font-family: "Montserrat";
     font-weight: 300;
-    font-size: 20px;
+    font-size: 1.2rem;
     color:black;
 }
 
@@ -55,7 +55,7 @@ body {
     ul{
         font-family: "Shafarik", serif;
         font-weight: 400;
-        font-size: 20px;
+        font-size: 1.2rem;
         font-style: normal;
         color:white;
     }
@@ -84,7 +84,7 @@ body {
   h1{
     font-family: "Shafarik", serif;
     font-weight: 400;
-    font-size: 40px;
+    font-size: 2rem;
     font-style: normal;
     color:#44000A;
   }
@@ -110,7 +110,7 @@ body {
   h2{
     font-family: "Shafarik", serif;
     font-weight: 500;
-    font-size: 28px;
+    font-size: 1.8rem;
     font-style: normal;
     color:#44000A;
   }
@@ -128,22 +128,35 @@ body {
   h3{
     font-family: "Shafarik", serif;
     font-weight: 400;
-    font-size: 25px;
+    font-size: 1.6rem;
     font-style: normal;
     color:#44000A;
   }
 
   ul{
     color:#44000A;
-    list-style: url('../images/flocon.svg');
 
+    li::before {
+      content: url('../images/flocon-colore.svg');
+      display: inline-block;
+      width: 12px;
+      height: 12px;
+      margin-right: 8px;
+      vertical-align: middle;
+      transition: transform 0.2s;
+    }
+    
+    li:hover::before {
+      transform: rotateY(180deg); /* Use deg, not a string */
+    }
 
     li{
       color:black;
+      display: flex;
       .content{
         font-family: "Montserrat";
         font-weight: 300;
-        font-size: 20px;
+        font-size: 1.2rem;
         color:black;
       }
     }
@@ -155,13 +168,25 @@ body {
       font-style: normal;
       color:#af3e3c;
       text-decoration:none;
+      display:flex;
+      //justify-content: center;
+      width: fit-content;
+      padding: 4px;
+      align-items: center;
+      transition-duration: 1s;
   }
 
   a:hover{
     color:#FCCA6F;
     background-color: #DD2255;
     border-radius: 100px;
-}
+    transition: 200ms;
+    /*animation-delay: 200ms; */
+  }
+  button:active{
+    background-color: #FD5D5B!important; 
+    color: #44000A!important;
+  }
 
   button{
     border-radius: 500px;
@@ -172,7 +197,7 @@ body {
     text-align: center;
     text-decoration: none;
     display: inline-block;
-    font-size: 16px;
+    font-size: 1rem;
   }
 
   button:hover {
@@ -194,13 +219,19 @@ body {
     text-align: center;
     text-decoration: none;
     display: inline-block;
-    font-size: 16px;
+    font-size: 1rem;
+    font-weight: 400;
+  }
+
+  .button-link:hover{
+    background-color: #44000A; 
+    color:#FFFFFF;
   }
 
   .petit{
     border-radius: 500px;
     padding: 5px;
-    font-size: 16px;
+    font-size: 1rem;
   }
 
   .button-link.petit{
@@ -210,12 +241,11 @@ body {
     color: #44000A;
     font-family: "Montserrat";
     font-weight: 300;
-    font-size: 20px;
+    font-size: 1.2rem;
     text-align: center;
     padding: 5px;
     text-decoration: none;
     display: inline-block;
-    font-size: 16px;
   }
 
   .rond-rouge{

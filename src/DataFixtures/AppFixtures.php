@@ -19,7 +19,7 @@ class AppFixtures extends Fixture
     public function load(ObjectManager $manager): void
     {
         $faker = Faker\Factory::create('fr_FR');
-        for ($i = 1; $i <= 80; $i++) {
+        for ($i = 0; $i <= 80; $i++) {
             $nom=$faker->lastName();
             $prenom=$faker->firstName();
 
@@ -40,19 +40,20 @@ class AppFixtures extends Fixture
         //$j permet de bouger sur l'util
         //$u permet de bouger sur le groupe
         $j=0;
-        $u=10;
+        $u=9;
         for ($i = 1; $i <= 8; $i++) {
-            
-            dump("dollard i $i");
-            
+                        
             $groupe= new GroupeCadeau;
             $groupe->setNomGroupe($faker->word());
             
             
             while ($j<$u) {
-                dump($j);
                 $j++;
                 $groupe->addUtilisateursConcerne($user[$j]);
+                
+                for ($z=$u-9; $z<$u; $z++) {
+                    $user[$j]->addAmi($user[$z]);
+                }
                 
                 $listeCadeau=new ListeCadeau;
                 for ($k = 1; $k <=8; $k++) {
