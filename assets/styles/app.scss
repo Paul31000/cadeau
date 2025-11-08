@@ -1,11 +1,27 @@
 @import "~bootstrap/scss/bootstrap";
 
+
+
+html {
+  font-size: 15px!important;
+}
+
+
+@media screen and (max-width: 400px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+
+
 body {
     background-color: #DD2255 ;
     font-family: "Montserrat";
     font-weight: 300;
     font-size: 1.2rem;
     color:black;
+    
 }
 
 
@@ -43,6 +59,23 @@ body {
   }
 } 
 
+.nav-authentication{
+  display: flex;
+  justify-content: space-evenly;
+  @media screen and (max-width: 400px){
+    flex-direction: column;
+  }
+}
+
+.flocon-menu{
+ display: flex;
+ justify-content: center;
+ padding: 0px 30px;
+ @media screen and (max-width: 400px){
+  width: 135px;
+ }
+}
+
 .menu-gauche{
     border: solid 20px #44000A ;
     background-color: #DD2255;
@@ -58,6 +91,9 @@ body {
         font-size: 1.2rem;
         font-style: normal;
         color:white;
+        /* @media screen and (min-width: 0px) and (max-width: 400px){
+          font-size: 2.2rem;
+        } */
     }
     
     a{
@@ -113,6 +149,9 @@ body {
     font-size: 1.8rem;
     font-style: normal;
     color:#44000A;
+    /* @media screen and (min-width: 0px) and (max-width: 400px){
+      font-size: 2.8rem;
+    } */
   }
 
   h2::before{
@@ -131,6 +170,9 @@ body {
     font-size: 1.6rem;
     font-style: normal;
     color:#44000A;
+    /* @media screen and (min-width: 0px) and (max-width: 400px){
+      font-size: 2.6rem;
+    } */
   }
 
   ul{
@@ -158,6 +200,9 @@ body {
         font-weight: 300;
         font-size: 1.2rem;
         color:black;
+        /* @media screen and (min-width: 0px) and (max-width: 400px){
+          font-size: 2.2rem;
+        } */
       }
     }
   }
@@ -194,10 +239,16 @@ body {
     border: none;
     color: #44000A;
     padding: 15px 32px;
+    @media screen and (max-width: 400px){
+      padding: 5px 5px;
+    }
     text-align: center;
     text-decoration: none;
     display: inline-block;
     font-size: 1rem;
+    /* @media screen and (min-width: 0px) and (max-width: 400px){
+      font-size: 2rem;
+    } */
   }
 
   button:hover {
@@ -221,6 +272,9 @@ body {
     display: inline-block;
     font-size: 1rem;
     font-weight: 400;
+    /* @media screen and (min-width: 0px) and (max-width: 400px){
+      font-size: 2rem;
+    } */
   }
 
   .button-link:hover{
@@ -232,6 +286,9 @@ body {
     border-radius: 500px;
     padding: 5px;
     font-size: 1rem;
+   /*  @media screen and (min-width: 0px) and (max-width: 400px){
+      font-size: 2rem;
+    } */
   }
 
   .button-link.petit{
@@ -246,9 +303,15 @@ body {
     padding: 5px;
     text-decoration: none;
     display: inline-block;
+    /* @media screen and (min-width: 0px) and (max-width: 400px){
+      font-size: 2rem;
+    } */
   }
 
   .rond-rouge{
+    @media screen and (max-width: 400px){
+      display: none;
+    }
     border-radius: 500px;
     background-color: #FD5D5B;
     height: 200px;
