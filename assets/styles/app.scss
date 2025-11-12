@@ -363,6 +363,22 @@ body {
   h3.titre_image{
     margin-top: 20px;
   }
+
+  .hover-show{
+    .hover{
+      display: none;
+      position: absolute;
+      color: white;
+      background-color: #DD2255;
+      border-radius: 20px;
+    }
+  }
+
+  .hover-show:hover{
+    .hover{
+      display: block;
+    }
+  }
 }
 
 

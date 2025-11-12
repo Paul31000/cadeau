@@ -2,18 +2,19 @@
 
 namespace App\Controller;
 
+use DateTime;
 use App\Entity\User;
 use App\Entity\Cadeau;
 use App\Form\CadeauType;
 use App\Entity\ListeCadeau;
 use App\Entity\UtilisateurOffre;
-use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 #[IsGranted('ROLE_AUTHENTIFIE')]
@@ -96,17 +97,28 @@ final class CadeauController extends AbstractController
                         ->createFormBuilder()
                         ->setAction($this->generateUrl('app_cadeau_je_prends',['id'=>$cadeau->getId()]))
                         ->add('a_hauteur_de',NumberType::class,['mapped'=>false])
+                        ->add('je_participe',SubmitType::class)
+                        ->add('j_offre',SubmitType::class)
                         ->getForm();
         
         $form->handleRequest($request);
         
+
         if ($form->isSubmitted() && $form->isValid()) {
+
+            if(isset($request->get('form')["je_participe"])&&!isset($request->get('form')["j_offre"])){
+                $responsable=false;
+            }else{
+                $responsable=true;
+            }
+            
             $utilisateurOffre=$this->returnUserOffre($cadeau,$this->getUser());
             
             if($utilisateurOffre==null){
                 $utilisateurOffre=new UtilisateurOffre;
                 $utilisateurOffre->setUtilisateurConcerne($this->getUser());
                 $cadeau->addUtilisateurOffre($utilisateurOffre);
+                $utilisateurOffre->setAchete($responsable);
             }
             
             $utilisateurOffre->setMontant($request->get('form')["a_hauteur_de"]);

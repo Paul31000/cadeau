@@ -22,6 +22,10 @@ class UtilisateurOffre
     #[ORM\ManyToOne(inversedBy: 'utilisateurOffres')]
     private ?User $utilisateurConcerne = null;
 
+    #[ORM\Column(nullable: true)]
+    //si l'util est charge d'acheter le cadeau
+    private ?bool $achete = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -59,6 +63,18 @@ class UtilisateurOffre
     public function setUtilisateurConcerne(?User $utilisateurConcerne): static
     {
         $this->utilisateurConcerne = $utilisateurConcerne;
+
+        return $this;
+    }
+
+    public function isAchete(): ?bool
+    {
+        return $this->achete;
+    }
+
+    public function setAchete(bool $achete): static
+    {
+        $this->achete = $achete;
 
         return $this;
     }

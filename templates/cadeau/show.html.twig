@@ -45,7 +45,14 @@
                         <ul>
                             {% if cadeau.utilisateurOffres|length > 0 %}
                                 {% for utilisateurOffre in cadeau.utilisateurOffres %}
-                                    <li>{{utilisateurOffre.utilisateurConcerne.pseudo}}</li>
+                                    <li>{{utilisateurOffre.utilisateurConcerne.pseudo}}
+                                        {% if utilisateurOffre.achete %}
+                                            <div class="hover-show">
+                                                {% include '/svgs/lock.svg.twig' %}
+                                                <div class="hover">Cet utilisateur s'est designé comme responsable du cadeau.</div>
+                                            </div>
+                                        {% endif %}
+                                    </li>
                                 {% endfor %}
                             {% else %}
                                 <li>Il n'y a pas encore de personnes offrant. Faites une proposition de prix.</li>

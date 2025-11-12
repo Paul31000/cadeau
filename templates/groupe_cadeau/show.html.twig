@@ -33,6 +33,14 @@
                                     <li>
                                         <a href="{{ path('app_cadeau_show', {'id': cadeau.id}) }}">
                                             {{cadeau.titre}} 
+                                            {% for utilisateurOffre in cadeau.utilisateurOffres %}
+                                                {% if utilisateurOffre.achete %}
+                                                    <div class="hover-show">
+                                                        {% include '/svgs/lock.svg.twig' %}
+                                                        <div class="hover">{{utilisateurOffre.utilisateurConcerne.pseudo}} s'est designé comme responsable du cadeau.</div>
+                                                    </div>
+                                                {% endif %}
+                                            {% endfor %}
                                         </a>
                                     </li>
                                 {% endfor %}
