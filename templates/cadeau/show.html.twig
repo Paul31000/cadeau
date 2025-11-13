@@ -44,16 +44,20 @@
                         <h3 class=''>Utilisateurs offrant:</h3>
                         <ul>
                             {% if cadeau.utilisateurOffres|length > 0 %}
+                                
                                 {% for utilisateurOffre in cadeau.utilisateurOffres %}
                                     <li>{{utilisateurOffre.utilisateurConcerne.pseudo}}
+                                        
                                         {% if utilisateurOffre.achete %}
                                             <div class="hover-show">
                                                 {% include '/svgs/lock.svg.twig' %}
                                                 <div class="hover">Cet utilisateur s'est designé comme responsable du cadeau.</div>
                                             </div>
                                         {% endif %}
+
                                     </li>
                                 {% endfor %}
+
                             {% else %}
                                 <li>Il n'y a pas encore de personnes offrant. Faites une proposition de prix.</li>
                             {% endif %}
@@ -83,6 +87,16 @@
                                 &nbsp;
                                 ({{cadeau.prix}})
                             {% endif %}
+
+                            {% for utilisateurOffre in cadeau.utilisateurOffres %}
+                                {% if utilisateurOffre.achete %}
+                                    <div class="hover-show">
+                                        {% include '/svgs/lock.svg.twig' %}
+                                        <div class="hover">{{utilisateurOffre.utilisateurConcerne.pseudo}} s'est designé comme responsable du cadeau.</div>
+                                    </div>
+                                {% endif %}
+                            {% endfor %}
+                            
                         </li>
                     {% endfor %}
                 </ul>

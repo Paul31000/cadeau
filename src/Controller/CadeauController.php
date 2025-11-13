@@ -109,7 +109,16 @@ final class CadeauController extends AbstractController
             if(isset($request->get('form')["je_participe"])&&!isset($request->get('form')["j_offre"])){
                 $responsable=false;
             }else{
-                $responsable=true;
+                $responsable=false;
+                $acheteDeja=false;
+                foreach($cadeau->getUtilisateurOffres() as $autreUtilOffre){
+                    if($autreUtilOffre->isAchete()){
+                        $acheteDeja=true;
+                    }
+                }
+                if(!$acheteDeja){
+                    $responsable=true;
+                }
             }
             
             $utilisateurOffre=$this->returnUserOffre($cadeau,$this->getUser());

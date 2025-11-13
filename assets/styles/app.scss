@@ -227,6 +227,9 @@ body {
     border-radius: 100px;
     transition: 200ms;
     /*animation-delay: 200ms; */
+    svg{
+      fill:#FCCA6F;
+    }
   }
   button:active{
     background-color: #FD5D5B!important; 
@@ -371,6 +374,10 @@ body {
       color: white;
       background-color: #DD2255;
       border-radius: 20px;
+      padding: 5px;
+    }
+    svg{
+      fill:#DD2255;
     }
   }
 
