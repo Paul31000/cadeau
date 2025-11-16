@@ -127,7 +127,7 @@ final class UserController extends AbstractController
     }
 
     #[Route('/confirmerLutin/{id}', name: 'app_user_confirm_ami', methods: ['POST'])]
-    public function confirmerLutin(Request $request, User $user, EntityManagerInterface $entityManager): Response
+    public function confirmerLutin(Request $request, User $user, MailerInterface $mailer, EntityManagerInterface $entityManager): Response
     {
         $this->denyAccessUnlessGranted('ROLE_AUTHENTIFIE');
         if ($this->isCsrfTokenValid('confirmer_ami'.$user->getId(), $request->getPayload()->getString('_token'))) {
@@ -139,6 +139,19 @@ final class UserController extends AbstractController
                     $entityManager->flush();
                 }  
             }
+
+            $pseudoReponse=$this->getUser()->getPseudo();
+            $email = (new TemplatedEmail())
+                ->from(new Address('noreply@paul-s.fr', 'Votre atelier noel'))
+                ->to((string) $user->getEmail())
+                ->subject("$pseudoReponse du site Paul-s a répondu oui à votre requête d\'ami.")
+                ->htmlTemplate('email/emailReponseOkAmi.html.twig')
+                ->context([
+                    'demandeur' => $this->getUser(),
+                ])
+            ;
+
+            $mailer->send($email);
             
         }
 
@@ -146,12 +159,25 @@ final class UserController extends AbstractController
     }
 
     #[Route('supprimerLutin/{id}', name: 'app_user_delete_ami', methods: ['POST'])]
-    public function supprimerLutin(Request $request, User $user, EntityManagerInterface $entityManager): Response
+    public function supprimerLutin(Request $request, User $user, MailerInterface $mailer, EntityManagerInterface $entityManager): Response
     {
         $this->denyAccessUnlessGranted('ROLE_AUTHENTIFIE');
         if ($this->isCsrfTokenValid('refuser_ami'.$user->getId(), $request->getPayload()->getString('_token'))) {
             $user->removeAmiDemande($this->getUser());
             $entityManager->flush();
+
+            $pseudoReponse=$this->getUser()->getPseudo();
+            $email = (new TemplatedEmail())
+                ->from(new Address('noreply@paul-s.fr', 'Votre atelier noel'))
+                ->to((string) $user->getEmail())
+                ->subject("$pseudoReponse du site Paul-s a répondu non à votre requête d\'ami.")
+                ->htmlTemplate('email/emailReponseNonAmi.html.twig')
+                ->context([
+                    'demandeur' => $this->getUser(),
+                ])
+            ;
+
+            $mailer->send($email);
         }
 
         return $this->redirectToRoute('app_user_index', [], Response::HTTP_SEE_OTHER);
