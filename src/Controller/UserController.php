@@ -2,17 +2,19 @@
 
 namespace App\Controller;
 
+use DateTime;
 use App\Entity\User;
 use App\Form\UserType;
 use App\Repository\UserRepository;
-use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Karser\Recaptcha3Bundle\Validator\Constraints\Recaptcha3Validator;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
+use Symfony\Component\Mime\Address;
 
 #[Route('/user')]
 final class UserController extends AbstractController
@@ -101,12 +103,24 @@ final class UserController extends AbstractController
     } */
 
     #[Route('/requeteLutin/{id}', name: 'app_requete_ami', methods: ['POST'])]
-    public function addLutin(Request $request, User $user, EntityManagerInterface $entityManager): Response
+    public function addLutin(Request $request, User $user, MailerInterface $mailer, EntityManagerInterface $entityManager): Response
     {
         $this->denyAccessUnlessGranted('ROLE_AUTHENTIFIE');
         if ($this->isCsrfTokenValid('requete_ami'.$user->getId(), $request->getPayload()->getString('_token'))) {
             $user->addAmiDemande($this->getUser());
             $entityManager->flush();
+            
+            $email = (new TemplatedEmail())
+                ->from(new Address('noreply@paul-s.fr', 'Votre atelier noel'))
+                ->to((string) $user->getEmail())
+                ->subject('Une personne du site vous a ajouté en ami.')
+                ->htmlTemplate('email/emailAddAmi.html.twig')
+                ->context([
+                    'demandeur' => $this->getUser(),
+                ])
+            ;
+
+            $mailer->send($email);
         }
 
         return $this->redirectToRoute('app_user_index', [], Response::HTTP_SEE_OTHER);

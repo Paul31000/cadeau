@@ -65,7 +65,7 @@ final class CadeauController extends AbstractController
             $entityManager->flush();
 
             return $this->redirectToRoute('app_cadeau_new',
-                ['listeCadeaux' => $listeCadeauOrigine->getId()],
+                ['listeCadeaux' => $cadeau->getListeCadeau()->getId()],
                 Response::HTTP_SEE_OTHER
             );
         }
