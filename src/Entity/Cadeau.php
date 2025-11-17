@@ -19,7 +19,7 @@ class Cadeau
     #[ORM\Column(length: 600, nullable: true)]
     private ?string $urlRecomendee = null;
 
-    #[ORM\Column(length: 15, nullable: true)]
+    #[ORM\Column(length: 50, nullable: true)]
     private ?string $taille = null;
 
     #[ORM\Column(length: 1000, nullable: true)]

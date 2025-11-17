@@ -61,9 +61,10 @@ body {
 
 .nav-authentication{
   display: flex;
-  justify-content: space-evenly;
+  justify-content: start;
   @media screen and (max-width: 400px){
     flex-direction: column;
+    justify-content: space-evenly;
   }
 }
 

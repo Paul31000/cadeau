@@ -96,41 +96,41 @@ final class CadeauController extends AbstractController
         $form = $this
                         ->createFormBuilder()
                         ->setAction($this->generateUrl('app_cadeau_je_prends',['id'=>$cadeau->getId()]))
-                        ->add('a_hauteur_de',NumberType::class,['mapped'=>false])
+                        ->add('a_hauteur_de:',NumberType::class,['mapped'=>false])
                         ->add('je_participe',SubmitType::class)
-                        ->add('j_offre',SubmitType::class)
+                        ->add("j_achete",SubmitType::class,['label'=>"J'achete"])
                         ->getForm();
         
         $form->handleRequest($request);
-        
 
         if ($form->isSubmitted() && $form->isValid()) {
-
-            if(isset($request->get('form')["je_participe"])&&!isset($request->get('form')["j_offre"])){
+            if(isset($request->get('form')["je_participe"])&&!isset($request->get('form')["j_achete"])){
                 $responsable=false;
             }else{
                 $responsable=false;
                 $acheteDeja=false;
+                
                 foreach($cadeau->getUtilisateurOffres() as $autreUtilOffre){
-                    if($autreUtilOffre->isAchete()){
+                    if($autreUtilOffre->isAchete() &&  $this->getUser()!= $autreUtilOffre->getUtilisateurConcerne()){
                         $acheteDeja=true;
                     }
                 }
                 if(!$acheteDeja){
                     $responsable=true;
+                
                 }
+
             }
-            
             $utilisateurOffre=$this->returnUserOffre($cadeau,$this->getUser());
             
             if($utilisateurOffre==null){
                 $utilisateurOffre=new UtilisateurOffre;
                 $utilisateurOffre->setUtilisateurConcerne($this->getUser());
                 $cadeau->addUtilisateurOffre($utilisateurOffre);
-                $utilisateurOffre->setAchete($responsable);
             }
-            
-            $utilisateurOffre->setMontant($request->get('form')["a_hauteur_de"]);
+
+            $utilisateurOffre->setAchete($responsable);
+            $utilisateurOffre->setMontant($request->get('form')["a_hauteur_de:"]);
 
             $entityManager->persist($utilisateurOffre);
             $entityManager->persist($cadeau);
@@ -150,14 +150,14 @@ final class CadeauController extends AbstractController
         $form = $this
                     ->createFormBuilder()
                     ->setAction($this->generateUrl('app_cadeau_jai_regarde',['id'=>$cadeau->getId()]))
-                    ->add('Prix_du_cadeau',NumberType::class,['mapped'=>false])
+                    ->add('Prix_du_cadeau:',NumberType::class,['mapped'=>false])
                     ->getForm();
 
         $form->handleRequest($request);
         
         
         if ($form->isSubmitted() && $form->isValid()) {
-            $cadeau->setPrix($request->get('form')["Prix_du_cadeau"]);
+            $cadeau->setPrix($request->get('form')["Prix_du_cadeau:"]);
             $entityManager->persist($cadeau);
             $entityManager->flush();
             

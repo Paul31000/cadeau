@@ -46,7 +46,7 @@
                             {% if cadeau.utilisateurOffres|length > 0 %}
                                 
                                 {% for utilisateurOffre in cadeau.utilisateurOffres %}
-                                    <li>{{utilisateurOffre.utilisateurConcerne.pseudo}}
+                                    <li>{{utilisateurOffre.utilisateurConcerne.pseudo}}({{utilisateurOffre.montant}}e)
                                         
                                         {% if utilisateurOffre.achete %}
                                             <div class="hover-show">
@@ -66,7 +66,7 @@
                         <h3 class='pt-3'>J'ai regardé le prix:</h3>
                         {{ render(controller('App\\Controller\\CadeauController::jairegarde', {'id':cadeau.id})) }} 
 
-                        <h3 class='pt-3'>J'offre:</h3>
+                        <h3 class='pt-3'>Je participe:</h3>
                         {{ render(controller('App\\Controller\\CadeauController::jePrends', {'id':cadeau.id})) }} 
                     </div>
                 {% endif %}
