@@ -24,13 +24,13 @@
             <tr>
                 <td>{{ user.pseudo }}</td>
                 <td>
-                    <form method="post" action="{{ path('app_user_confirm_ami', {'id': user.id}) }}" onsubmit="return confirm('Voulez vous accepter ce lutin?');">
+                    <form method="post" action="{{ path('app_user_confirm_ami', {'id': user.id}) }}" onsubmit="return confirm('Voulez vous accepter?');">
                         <input type="hidden" name="_token" value="{{ csrf_token('confirmer_ami' ~ user.id) }}">
-                        <button class="btn">Confirmer c'est mon lutin</button>
+                        <button class="btn mb-1">Confirmer ami</button>
                     </form>
-                    <form method="post" action="{{ path('app_user_delete_ami', {'id': user.id}) }}" onsubmit="return confirm('Voulez vous vraiment refuser?');">
+                    <form method="post" action="{{ path('app_user_delete_ami', {'id': user.id}) }}" onsubmit="return confirm('Voulez vous refuser?');">
                         <input type="hidden" name="_token" value="{{ csrf_token('refuser_ami' ~ user.id) }}">
-                        <button class="btn">Refuser ce n'est pas mon lutin désolé</button>
+                        <button class="btn">Refuser ami</button>
                     </form>
                 </td>
             </tr>
@@ -60,7 +60,7 @@
             <tr>
                 <td>{{ user.pseudo }}</td>
                 <td>
-                    <form method="post" action="{{ path('app_requete_ami', {'id': user.id}) }}" onsubmit="return confirm('Voulez vous demander à ce lutin de se connecter?');">
+                    <form method="post" action="{{ path('app_requete_ami', {'id': user.id}) }}" onsubmit="return confirm('Voulez vous ajouter cette personne en ami?');">
                         <input type="hidden" name="_token" value="{{ csrf_token('requete_ami' ~ user.id) }}">
                         <button class="btn">envoyer une demande</button>
                     </form>

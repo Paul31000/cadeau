@@ -83,12 +83,14 @@
                             <a href="{{ path('app_cadeau_show', {'id': cadeau.id}) }}">
                                 {{cadeau.titre}} 
                             </a>
+                            {% set somme = 0 %}
                             {% if cadeau.prix is not null %}
                                 &nbsp;
                                 ({{cadeau.prix}})
                             {% endif %}
 
                             {% for utilisateurOffre in cadeau.utilisateurOffres %}
+                                {% set somme =  somme + utilisateurOffre.montant %}
                                 {% if utilisateurOffre.achete %}
                                     <div class="hover-show">
                                         {% include '/svgs/lock.svg.twig' %}
@@ -96,6 +98,36 @@
                                     </div>
                                 {% endif %}
                             {% endfor %}
+                            
+                            {% if cadeau.prix is not null %}
+                                &nbsp;
+                                {% set pct = somme / cadeau.prix  %}
+                                {% if pct > 0 and pct < 0.08 %}
+                                    <img class="cotise-svg" src="{{ asset('build/images/1.svg') }}" alt="cotise 1/12">
+                                {% elseif pct > 0.08 and pct < 0.16 %}
+                                    <img class="cotise-svg" src="{{ asset('build/images/2.svg') }}" alt="cotise 2/12">
+                                {% elseif pct > 0.24 and pct < 0.32 %}
+                                    <img class="cotise-svg" src="{{ asset('build/images/3.svg') }}" alt="cotise 3/12">
+                                {% elseif pct > 0.32 and pct < 0.4 %}
+                                    <img class="cotise-svg" src="{{ asset('build/images/4.svg') }}" alt="cotise 4/12">
+                                {% elseif pct > 0.4 and pct < 0.48 %} 
+                                    <img class="cotise-svg" src="{{ asset('build/images/5.svg') }}" alt="cotise 5/12">
+                                {% elseif pct > 0.48 and pct < 0.54 %}
+                                    <img class="cotise-svg" src="{{ asset('build/images/6.svg') }}" alt="cotise 6/12">
+                                {% elseif pct > 0.54 and pct < 0.62 %}
+                                    <img class="cotise-svg" src="{{ asset('build/images/7.svg') }}" alt="cotise 7/12">
+                                {% elseif pct > 0.62 and pct < 0.70 %}
+                                    <img class="cotise-svg" src="{{ asset('build/images/8.svg') }}" alt="cotise 8/12">
+                                {% elseif pct > 0.70 and pct < 0.78 %}
+                                    <img src="{{ asset('build/images/9.svg') }}" alt="cotise 9/12">
+                                {% elseif pct > 0.78 and pct < 0.86 %}
+                                    <img class="cotise-svg" src="{{ asset('build/images/10.svg') }}" alt="cotise 10/12">
+                                {% elseif pct > 0.86 and pct < 0.94 %}
+                                    <img class="cotise-svg" src="{{ asset('build/images/11.svg') }}" alt="cotise 11/12">
+                                {% elseif pct > 0.94 and pct < 1 %}
+                                    <img class="cotise-svg" src="{{ asset('build/images/12.svg') }}" alt="cotise 12/12">
+                                {% endif %}                                               
+                            {% endif %}
                             
                         </li>
                     {% endfor %}
