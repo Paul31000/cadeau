@@ -98,7 +98,7 @@ final class CadeauController extends AbstractController
                         ->setAction($this->generateUrl('app_cadeau_je_prends',['id'=>$cadeau->getId()]))
                         ->add('a_hauteur_de:',NumberType::class,['mapped'=>false])
                         ->add('je_participe',SubmitType::class)
-                        ->add("j_achete",SubmitType::class,['label'=>"J'achete"])
+                        ->add("j_achete",SubmitType::class,['label'=>"J'achète"])
                         ->getForm();
         
         $form->handleRequest($request);

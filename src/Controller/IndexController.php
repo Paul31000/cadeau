@@ -13,7 +13,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 final class IndexController extends AbstractController
 {
-    #[Route('/',name: 'accueil', methods: ['GET'])]
+    #[Route('/accueil2',name: 'accueil', methods: ['GET'])]
     #[IsGranted('ROLE_AUTHENTIFIE')]
     public function accueil(EntityManagerInterface $em): Response
     {
@@ -24,7 +24,7 @@ final class IndexController extends AbstractController
         ]);
     } 
 
-    #[Route('/presentation',name: 'presentation', methods: ['GET'])]
+    #[Route('/',name: 'presentation', methods: ['GET'])]
     public function presentation(): Response
     {
         
