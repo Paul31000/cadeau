@@ -15,6 +15,7 @@
 
     <body data-turbo="false" >
         <div class="container-fluid">
+            
             <div class="row">
                 <div class="col-xl-3"></div>
                 <div class="col-12 col-xl-3 menu-gauche">
@@ -52,8 +53,17 @@
                     </div>
                 </div>
                 <div class="col-12 page-border"></div>
-                <div class="col-12 col-xl-9 p-5 page-contenu">
-                    {% block body %}{% endblock %}
+                <div class="col-12 col-xl-9 page-contenu position-relative">
+                    <div class="row position-absolute colonnes-vertes">
+                        <div class="col-2 fond-vert"></div>
+                        <div class="col-2"></div>
+                        <div class="col-2 fond-vert"></div>
+                        <div class="col-2"></div>
+                        <div class="col-2 fond-vert"></div>
+                    </div>
+                    <div class="body p-5">
+                        {% block body %}{% endblock %}
+                    </div>
                 </div>
             </div>
         </div>

@@ -69,3 +69,11 @@ encore_entry_script_tags('le nom declare dans webpack')
 [] choisir de rejoindre ou non un groupe créé
 
 [] Ajouter .env à la production
+
+
+# couleur
+
+#DD2255 
+#FD5D5B
+#44000A
+#FCCA6F

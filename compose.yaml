@@ -1,20 +1,65 @@
+#le compose s'execute apres le docker file
+#le volume est transféré après la création décrite dans docker file.
+#reste a lancer les commandes suivantes
+#docker compose exec php composer install
+#docker compose exec php npm install
+#docker compose exec php npm run build
+#docker compose exec php php bin/console doctrine:database:create
+#docker compose exec php php bin/console doctrine:schema:create
+#docker compose exec php php bin/console doctrine:fixtures:load
+#decommenter la ligne de useruuid correspondant a votre utilisateur drupal dev. dans /src/Security/CookieAuthenticator
+#se connecter a drupal dev avec l'utilisateur correspondant
 
 services:
-###> doctrine/doctrine-bundle ###
-  database:
-    image: postgres:${POSTGRES_VERSION:-16}-alpine
-    environment:
-      POSTGRES_DB: ${POSTGRES_DB:-app}
-      # You should definitely change the password in production
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-!ChangeMe!}
-      POSTGRES_USER: ${POSTGRES_USER:-app}
+  db:
+      image: mysql:8.0.31
+      command: ["--default-authentication-plugin=mysql_native_password"]
+      ports:
+          - 3306:3306
+      environment:
+          MYSQL_ROOT_PASSWORD: password
+          MYSQL_DATABASE: cadeau
+          MYSQL_USER: user
+          MYSQL_PASSWORD: password
+      volumes:
+          - ./mysql_data:/var/lib/mysql
+
+  php:
+    build:
+      args:
+        PHP_XDEBUG_MODE: debug
+        PHP_XDEBUG_CLIENT_PORT: 9003
+        PHP_XDEBUG_CLIENT_HOST: 172.21.64.1 ##le resultat de la commande ip route de default sur la machine wsl
+        SYMFONY_CLI_VERSION: 4.27.4
+    ports:
+      - 8000:80
     volumes:
-      - database_data:/var/lib/postgresql/data:rw
-      # You may use a bind-mounted host directory instead, so that it is harder to accidentally remove the volume and lose all your data!
-      # - ./docker/db/data:/var/lib/postgresql/data:rw
-###< doctrine/doctrine-bundle ###
+      - .:/var/www/html
+      - ${SSH_AUTH_SOCK}:/ssh-agent
+    depends_on:
+      - db
+    environment:
+      - SSH_AUTH_SOCK=/ssh-agent
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+
+  phpmyadmin:
+      image: phpmyadmin:5.2.0
+      environment:
+          - PMA_HOST=db
+          - PMA_USER=user
+          - PMA_PASSWORD=password
+      ports:
+          - 80:80
+      restart: always
+      container_name: phpmyadmin
+
+  mailhog:
+    image: mailhog/mailhog
+    container_name: mailhog
+    ports:
+      - 1025:1025 #SMTP
+      - 8025:8025 #WEB UI
 
 volumes:
-###> doctrine/doctrine-bundle ###
-  database_data:
-###< doctrine/doctrine-bundle ###
+  mysql_data:

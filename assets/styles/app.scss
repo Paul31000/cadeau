@@ -13,10 +13,13 @@ html {
   }
 }
 
-
+.body{
+  z-index: 8;
+  position: relative;
+}
 
 body {
-    background-color: #DD2255 ;
+    //background-color: #DD2255 ;
     font-family: "Montserrat";
     font-weight: 300;
     font-size: 1.2rem;
@@ -24,7 +27,16 @@ body {
     
 }
 
+.colonnes-vertes{
+  width: 75vw;
+  height: 100%;
+}
 
+.fond-vert {
+  background-color: #d6ffda;
+  min-height: 100%;
+  z-index: 1;
+}
 
 @media screen and (min-width: 0px) and (max-width: 1199px){
   .menu-gauche{
@@ -79,19 +91,19 @@ body {
 
 .menu-gauche{
     border: solid 20px #44000A ;
-    background-color: #DD2255;
+    background-color: white;
     display: flex;
     align-items: start;
     justify-content: center;
     position: fixed;
-    z-index: 2;
+    z-index: 7;
 
     ul{
         font-family: "Shafarik", serif;
         font-weight: 400;
         font-size: 1.2rem;
         font-style: normal;
-        color:white;
+        color:black;
         /* @media screen and (min-width: 0px) and (max-width: 400px){
           font-size: 2.2rem;
         } */
@@ -101,7 +113,7 @@ body {
         font-family: "Shafarik", serif;
         font-weight: 400;
         font-style: normal;
-        color:white;
+        color:#44000A;
         text-decoration:underline;
     }
 }
@@ -111,13 +123,13 @@ body {
   border-right: solid 20px #FD5D5B;
   border-top: solid 20px #FD5D5B;
   border-bottom: solid 20px #FD5D5B;
-  z-index: 1;
+  z-index: 6;
   pointer-events: none;
 }
 
 .page-contenu{
-  z-index: 0;
-  background-color: #FCCA6F;
+  z-index: 5;
+  background-color: white;
   h1{
     font-family: "Shafarik", serif;
     font-weight: 400;
