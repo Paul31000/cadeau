@@ -7,6 +7,8 @@
 /public/bundles/
 /var/
 /vendor/
+mysql_data/
+public/.htaccess
 ###< symfony/framework-bundle ###
 
 ###> phpunit/phpunit ###
