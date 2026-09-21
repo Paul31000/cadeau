@@ -39,16 +39,16 @@
         #}
         <br>
         <div class="nav-authentication">
-            <button class="btn btn-lg btn-primary" type="submit">
+            <button class="fake-a" type="submit">
                 S'authentifier
             </button>
 
             <a href="{{ path('app_user_new') }}" class="mx-4">Créez votre compte</a>
 
             <a href="{{ path('app_forgot_password_request') }}" class="mx-4">Réinitialisez votre mot de passe</a>
+
+            <a href="{{ path('presentation') }}" class="mx-4">Présentation du site</a>
         </div>
     </form>
-    <div class="d-flex align-items-end">
-        <a href="{{ path('presentation') }}" class="mx-4">Présentation du site</a>
     </div>
 {% endblock %}
