@@ -24,7 +24,7 @@
             <tr>
                 <td>{{ user.pseudo }}</td>
                 <td>
-                    <form method="post" action="{{ path('app_user_confirm_ami', {'id': user.id}) }}" onsubmit="return confirm('Voulez vous accepter?');">
+                    <form method="post" action="{{ path('app_user_confirm_ami', {'id': user.id}) }}">
                         <input type="hidden" name="_token" value="{{ csrf_token('confirmer_ami' ~ user.id) }}">
                         <button class="btn mb-1">Confirmer ami</button>
                     </form>

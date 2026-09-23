@@ -1,10 +1,11 @@
 <h1>Bonjour</h1>
 
-<p>Pour reinitialiser votre mot de passe visitez ce lien</p>
+<p>Vous avez fait une demande de réinitialisation de mot de passe sur le site "cadeau"</p>
+<p>Visitez ce lien</p>
 
 <a href="{{ url('app_reset_password', {token: resetToken.token}) }}">{{ url('app_reset_password', {token: resetToken.token}) }}</a>
 
-<p>Ce lien expirera dans{{ resetToken.expirationMessageKey|trans(resetToken.expirationMessageData, 'ResetPasswordBundle') }}.</p>
+<p>Ce lien expirera dans {{ resetToken.expirationMessageKey|trans(resetToken.expirationMessageData, 'ResetPasswordBundle') }}.</p>
 
-<p>A bientot</p>
+<p>A bientôt</p>
 

@@ -227,10 +227,9 @@ body {
       color:#af3e3c;
       text-decoration:none;
       display:flex;
-      //justify-content: center;
       width: fit-content;
-      padding: 4px;
-      border-radius: 100px;
+      padding: 5px;
+      border-radius: 50px;
       align-items: center;
       transition-duration: 1s;
   }
@@ -238,8 +237,8 @@ body {
   a:hover{
     color:#a7ffaa;
     background-color: #DD2255;
-    border-radius: 100px;
     transition: 200ms;
+    padding: 15px;
     svg{
       fill:#a7ffaa;
     }
@@ -264,9 +263,9 @@ body {
   button{
     font-family: "Montserrat";
     border-radius: 500px;
-    background-color: #FD5D5B; 
+    background-color: #a7ffaa; 
     border: none;
-    color: #44000A;
+    color: #af3e3c;
     padding: 15px 32px;
     @media screen and (max-width: 400px){
       padding: 5px 5px;
@@ -287,9 +286,9 @@ body {
   .button-link{
     font-family: "Montserrat";
     border-radius: 500px;
-    background-color: #FD5D5B;
+    background-color: #a7ffaa;
     border: none;
-    color: #44000A;
+    color: #af3e3c;
     padding: 15px 32px;
     text-align: center;
     text-decoration: none;
@@ -317,9 +316,9 @@ body {
 
   .button-link.petit{
     border-radius: 500px;
-    background-color: #FD5D5B; /* Green */
+    background-color: #a7ffaa; /* Green */
     border: none;
-    color: #44000A;
+    color: #af3e3c;
     font-family: "Montserrat";
     font-weight: 300;
     font-size: 1.2rem;

@@ -117,6 +117,7 @@ final class UserController extends AbstractController
                 ->htmlTemplate('email/emailAddAmi.html.twig')
                 ->context([
                     'demandeur' => $this->getUser(),
+                    'url' => $this->generateUrl('app_user_index'),
                 ])
             ;
 
@@ -148,6 +149,7 @@ final class UserController extends AbstractController
                 ->htmlTemplate('email/emailReponseOkAmi.html.twig')
                 ->context([
                     'demandeur' => $this->getUser(),
+                    'url' => $this->generateUrl('app_user_index'),
                 ])
             ;
 
@@ -174,6 +176,7 @@ final class UserController extends AbstractController
                 ->htmlTemplate('email/emailReponseNonAmi.html.twig')
                 ->context([
                     'demandeur' => $this->getUser(),
+                    'url' => $this->generateUrl('app_user_index'),
                 ])
             ;
 
