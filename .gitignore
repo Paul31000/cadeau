@@ -1,4 +1,10 @@
 ###> symfony/framework-bundle ###
+/.messenger-cron.lock
+/templates/email/error_log
+/error_log
+/messenger.sh
+/migrations/*
+/nohup.out
 /.env
 /.env.local
 /.env.local.php

@@ -9,4 +9,4 @@ when@prod:
     framework:
         router:
            strict_requirements: null
-           default_uri: 'http://paul-s.fr'
+           default_uri: 'https://cadeau.gipa9644.odns.fr/'
