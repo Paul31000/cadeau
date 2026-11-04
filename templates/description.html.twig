@@ -7,18 +7,35 @@
   <h1>Présentation du site</h1>
   
   <p>Ce site a pour but de partager et d'interagir
-     autour de listes de cadeaux.  Pour interagir avec d'autres personnes 
-     vous devez faire une demande de connexion 
-     avec la personne avec laquelle vous voulez partager un événement. 
+     autour de listes de cadeaux. De noël d'anniversaire, ou de mariage... C'est vous qui décidez!
+     Le site propose de créer un évènement au cours duquel chacun peut faire une liste de cadeaux.
+     Les personnes du groupe peuvent ensuite participer, commenter ou se proposer acheteur des cadeaux des listes du groupe. 
      </p>
-     <br>
-     <p>Puis vous créerez le groupe et ajouterez les personnes concernées.
-      Ensuite vous formulerez des voeux. Enfin
-    vous pourrez vous désigner comme personne responsable de l'achat du cadeau ou cotisant.
-    </p>
     <br>
+
+    <h3 class='titre_image'>Ici le contrôle des liste d'amis sur le site:</h3>
+    <br>
+    <img
+        class="fit-picture"
+        src="{{ asset('build/images/ajouter_personne.png') }}"
+        alt="ici le controle des personnes ajouter amis" />
+    <br><br>
+
+    <h3 class='titre_image'>Ici le profil d'une personne:</h3>
+    <br>
+    <img
+        class="fit-picture"
+        src="{{ asset('build/images/vue_utilisateur.png') }}"
+        alt="ici le profil d'une personne avec adresse" />
   
   <h3 class='titre_image'>Ici les listes de cadeau:</h3>
+
+      <img
+        class="fit-picture"
+        src="{{ asset('build/images/liste.png') }}"
+        alt="ici des liste de cadeau" />
+    <br><br>
+
     <p>Ce symbole {% include '/svgs/lock.svg.twig' %} veut dire qu'une personne du groupe s'est proposée d'acheter le cadeau.</p>
      <p>Ce symbole 
      <img class="cotise-svg" src="{{ asset('build/images/1.svg') }}" alt="cotise 1/12">
@@ -31,11 +48,7 @@
     indique la part du cadeau qui est financée.</p>
               <br>                      
 
-    <img
-        class="fit-picture"
-        src="{{ asset('build/images/liste.png') }}"
-        alt="ici des liste de cadeau" />
-    <br><br>
+
 
     <h3 class='titre_image'>Ici le haut de page des interactions autour d'un cadeau: </h3>
     <p>On peut poster des messages qui portent sur le cadeau.
@@ -67,19 +80,6 @@
         alt="ici la vue pour creer un souhait de cadeau" />
     <br><br>
 
-    <h3 class='titre_image'>Ici le contrôle des liste d'amis sur le site:</h3>
-    <br>
-    <img
-        class="fit-picture"
-        src="{{ asset('build/images/ajouter_personnes.png') }}"
-        alt="ici le controle des personnes ajouter amis" />
-    <br><br>
 
-    <h3 class='titre_image'>Ici le profil d'une personne:</h3>
-    <br>
-    <img
-        class="fit-picture"
-        src="{{ asset('build/images/vue_utilisateur.png') }}"
-        alt="ici le profil d'une personne avec adresse" />
 
 {% endblock %}
