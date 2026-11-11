@@ -14,7 +14,7 @@
                     Cher père noël, je souhaite un/une <strong>{{ cadeau.titre }}</strong>.&nbsp;
                     
                     {% if cadeau.urlRecomendee is not null %}
-                        <a target="_blank" href="{{ cadeau.urlRecomendee }}">Cliquez ici pour voir le site proposant le cadeau.</a>&nbsp;
+                        <a class="user-link" target="_blank" href="{{ cadeau.urlRecomendee }}">Cliquez ici pour voir le site proposant le cadeau.</a>&nbsp;
                     {% endif %}
 
                     Mes préférences pour le cadeau sont: 
@@ -80,7 +80,7 @@
                 <ul>
                     {% for cadeau in cadeau.listeCadeau.cadeaux %}
                         <li>
-                            <a href="{{ path('app_cadeau_show', {'id': cadeau.id}) }}">
+                            <a class="cadeau-link" href="{{ path('app_cadeau_show', {'id': cadeau.id}) }}">
                                 {{cadeau.titre}} 
                             </a>
                             {% set somme = 0 %}
