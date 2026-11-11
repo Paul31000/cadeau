@@ -225,26 +225,52 @@ body {
       }
     }
   }
-  
-  a{
+
+  a.user-link{
       font-family: "Montserrat";
       font-weight: 500;
       font-style: normal;
-      color:#af3e3c;
+      color:#DD2255;
       text-decoration:none;
       display:flex;
       width: fit-content;
       padding: 5px;
-      border-radius: 50px;
+      margin: 2px;
+      border-radius: 15px;
       align-items: center;
       transition-duration: 1s;
   }
 
-  a:hover{
+  a.user-link:hover{
     color:#a7ffaa;
     background-color: #DD2255;
     transition: 200ms;
-    padding: 15px;
+    svg{
+      fill:#a7ffaa;
+    }
+  }
+
+  a.cadeau-link{
+      font-family: "Montserrat";
+      font-weight: 500;
+      font-style: normal;
+      color:black;
+      text-decoration:none;
+      display:flex;
+      width: fit-content;
+      padding: 5px;
+      margin: 2px;
+      border-radius: 15px;
+      align-items: center;
+      transition-duration: 1s;
+      background-color: rgba(253, 253, 253, 0.65);
+      border: dashed 1px #d5a9b5;
+  }
+
+  a.cadeau-link:hover{
+    color:#a7ffaa;
+    background-color: #DD2255;
+    transition: 200ms;
     svg{
       fill:#a7ffaa;
     }
@@ -253,7 +279,7 @@ body {
   button:hover{
     color:#a7ffaa;
     background-color: #DD2255;
-    border-radius: 100px;
+    border-radius: 500px;
     transition: 200ms;
     font-weight:500;
     svg{
@@ -410,6 +436,7 @@ body {
   .hover-show:hover{
     .hover{
       display: block;
+      padding: 5px;
     }
   }
 

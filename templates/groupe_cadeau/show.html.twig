@@ -27,11 +27,11 @@
                     {% if listeCadeaux.utilisateur != app.user %}
                 
                         <div class="col-12 col-sm-6 col-xl-3">
-                            <h2>Liste de <a href="{{ path('app_user_show', {'id': listeCadeaux.utilisateur.id}) }}">{{listeCadeaux.utilisateur.pseudo}}</a></h2>
+                            <h2>Liste de <a class="user-link" href="{{ path('app_user_show', {'id': listeCadeaux.utilisateur.id}) }}">{{listeCadeaux.utilisateur.pseudo}}</a></h2>
                             <ul>
                                 {% for cadeau in listeCadeaux.cadeaux %}
                                     <li>
-                                        <a href="{{ path('app_cadeau_show', {'id': cadeau.id}) }}">
+                                        <a class="cadeau-link" href="{{ path('app_cadeau_show', {'id': cadeau.id}) }}">
                                             {{cadeau.titre}} 
                                             {% set somme = 0 %}
                                             {% for utilisateurOffre in cadeau.utilisateurOffres %}
