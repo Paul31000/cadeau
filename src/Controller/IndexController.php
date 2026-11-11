@@ -24,7 +24,7 @@ final class IndexController extends AbstractController
         ]);
     } 
 
-    #[Route('/description',name: 'presentation', methods: ['GET'])]
+    #[Route('/',name: 'presentation', methods: ['GET'])]
     public function presentation(): Response
     {
         
