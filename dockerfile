@@ -6,7 +6,7 @@ WORKDIR /var/www/html
 
 RUN apt-get update \
     && apt-get install -y \
-    #    libicu-dev \
+        libicu-dev \
         libpq-dev \
     #    libzip-dev \
         unzip \
@@ -17,7 +17,7 @@ RUN apt-get update \
 
 # Extensions PHP
 RUN docker-php-ext-install \
-#    intl \
+    intl \
     pdo \
     pdo_mysql 
 #    zip 

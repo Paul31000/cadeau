@@ -4,15 +4,14 @@ namespace App\Controller;
 
 use DateTime;
 use App\Entity\Message;
+use App\Form\MessageType;
 use App\Repository\MessageRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
-use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
-use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 #[IsGranted('ROLE_AUTHENTIFIE')]
@@ -38,22 +37,13 @@ final class MessageController extends AbstractController
         
         $message = new Message();
         
-        $form = $this
-                    ->createFormBuilder()
-                    ->setAction($this->generateUrl('app_message_new',
-                        ['idEntiteeLiee'=>$idEntiteeLiee,
-                        'entiteeLiee'=>$entiteeLiee]
-                    ))
-                    ->add('text', TextType::class, [
-                        'required'   => true,
-                        'label' => 'message:*',
-                        'sanitize_html' => true,
-                        'constraints' => [new Length([
-                            'max' => 5000,
-                            "maxMessage"=>"Le texte ne peut pas excéder {{ limit }} caractères."
-                        ])],
-                    ])
-                    ->getForm();
+        $form = $this->createForm(MessageType::class, $message,
+            ['action'=>$this->generateUrl('app_message_new',[
+                    'idEntiteeLiee'=>$idEntiteeLiee,
+                    'entiteeLiee'=>$entiteeLiee
+                ]),
+                'method'=>'POST'
+            ]);
                 
 
         $form->handleRequest($request);
@@ -62,7 +52,6 @@ final class MessageController extends AbstractController
             $message->setEntiteeLiee($entiteeLiee);
             $message->setDatePoste(new DateTime());
             $message->setIdEntiteeLiee($idEntiteeLiee);
-            $message->setText($request->get('form')["text"]);
             $message->setUtilisateurPoste($this->getUser());
             $entityManager->persist($message);
             $entityManager->flush();
@@ -79,40 +68,19 @@ final class MessageController extends AbstractController
         ]);
     }
 
-    /* #[Route('/{id}', name: 'app_message_show', methods: ['GET'])]
-    public function show(Message $message): Response
-    {
-        return $this->render('message/show.html.twig', [
-            'message' => $message,
-        ]);
-    } */
-
     #[Route('/{id}/edit', name: 'app_message_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Message $message, EntityManagerInterface $entityManager): Response
     {
-        $form = $form = $this
-                            ->createFormBuilder($message)
-                            ->setAction($this->generateUrl('app_message_edit',
-                                ['id'=>$message->getId()]
-                            ))
-                            ->add('text', TextareaType::class, [
-                                'row_attr' => ['class' => 'text-editor'],
-                                'required'   => true,
-                                'label' => 'message:*',
-                                'sanitize_html' => true,
-                                'constraints' => [new Length([
-                                    'max' => 5000,
-                                    "maxMessage"=>"Le texte ne peut pas excéder {{ limit }} caractères."
-                                ])],
-                            ])
-                            ->getForm();
-
+        $form = $this->createForm(MessageType::class, $message);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid() && $message->getUtilisateurPoste() == $this->getUser()) {
             $entityManager->flush();
-
-            return $this->redirectToRoute('accueil', [], Response::HTTP_SEE_OTHER);
+            if($message->getEntiteeLiee() == "cadeau"){
+                return $this->redirectToRoute('app_cadeau_show', ['id'=>$message->getIdEntiteeLiee()], Response::HTTP_SEE_OTHER);
+            }else{
+                return $this->redirectToRoute('accueil', [], Response::HTTP_SEE_OTHER);
+            }
         }
 
         return $this->render('message/edit.html.twig', [

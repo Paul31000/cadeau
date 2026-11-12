@@ -110,9 +110,11 @@ body {
         font-size: 1.2rem;
         font-style: normal;
         color:black;
-        /* @media screen and (min-width: 0px) and (max-width: 400px){
-          font-size: 2.2rem;
-        } */
+    }
+
+    li.sous{
+      list-style: circle;
+      margin-top: 5px;
     }
     
     a{
@@ -309,12 +311,6 @@ body {
     font-weight:500;
   }
 
-  .button-link.petit:hover {
-    background-color: #DD2255; 
-    color:#a7ffaa;
-    font-weight: 500;
-  }
-
   .button-link{
     font-family: "Montserrat";
     border-radius: 500px;
@@ -327,9 +323,6 @@ body {
     display: inline-block;
     font-size: 1.2rem;
     font-weight:500;
-    /* @media screen and (min-width: 0px) and (max-width: 400px){
-      font-size: 2rem;
-    } */
   }
 
   .button-link:hover{
@@ -340,27 +333,6 @@ body {
   .petit{
     border-radius: 500px;
     padding: 5px;
-    font-size: 1rem;
-   /*  @media screen and (min-width: 0px) and (max-width: 400px){
-      font-size: 2rem;
-    } */
-  }
-
-  .button-link.petit{
-    border-radius: 500px;
-    background-color: #a7ffaa; /* Green */
-    border: none;
-    color: #af3e3c;
-    font-family: "Montserrat";
-    font-weight: 300;
-    font-size: 1.2rem;
-    text-align: center;
-    padding: 5px;
-    text-decoration: none;
-    display: inline-block;
-    /* @media screen and (min-width: 0px) and (max-width: 400px){
-      font-size: 2rem;
-    } */
   }
 
   .rond-rouge{

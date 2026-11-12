@@ -5,24 +5,28 @@
         {% if messages|length > 0 %}
             {% for message in messages %}
                 <li>
-                    <div class="content">
-                        <h3 {% if loop.index != 1 %} class='pt-4' {% endif %}>
+                    <div class="d-flex flex-column">
+                        <h3 {% if loop.index != 1 %} {% endif %}>
                             Le <strong> {{ message.datePoste|date_fr }} </strong>
                             {{ message.utilisateurPoste.pseudo }}
                             disait:
                         </h3>
-                        <p>{{ message.text }}</p>
-                    </div>
-                    <div class="d-flex align-items-start pt-4">
-                        <a class="button-link petit" href="{{ path('app_message_edit', {'id': message.id}) }}">edit</a>
-                        <form 
-                            class="mx-3" 
-                            action="{{ url('app_message_delete', {'id': message.id}) }}" 
-                            method="post"
-                        >
-                            <input  type="hidden" name="token" value="{{ csrf_token('delete_message') }}"/>
-                            <button class="petit" type="submit">supprimer le message</button>
-                        </form>
+                        <div class="d-flex flex-direction-row align-items-top pb-4">
+                            <div class="content">
+                                <p>{{ message.text }}</p>
+                            </div>
+                            <div class=" d-flex align-items-start mx-2">
+                                <a class="button-link petit" href="{{ path('app_message_edit', {'id': message.id}) }}">edit</a>
+                                <form 
+                                    class="mx-3" 
+                                    action="{{ url('app_message_delete', {'id': message.id}) }}" 
+                                    method="post"
+                                >
+                                    <input  type="hidden" name="token" value="{{ csrf_token('delete_message') }}"/>
+                                    <button class="petit" type="submit">supprimer le message</button>
+                                </form>
+                            </div>
+                        </div>
                     </div>
                 </li>
             {% endfor %}
