@@ -18,7 +18,6 @@ class MessageType extends AbstractType
                                 'row_attr' => ['class' => 'text-editor'],
                                 'required'   => true,
                                 'label' => 'message:*',
-                                'sanitize_html' => true,
                                 'constraints' => [new Length([
                                     'max' => 5000,
                                     "maxMessage"=>"Le texte ne peut pas excéder {{ limit }} caractères."
