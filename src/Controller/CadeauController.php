@@ -80,7 +80,6 @@ final class CadeauController extends AbstractController
     public function delete(Request $request, Cadeau $cadeau, EntityManagerInterface $entityManager): Response
     {
         $listeCadeauOrigine= $cadeau->getListeCadeau();
-
         if ($this->isCsrfTokenValid('delete'.$cadeau->getId(), $request->getPayload()->getString('_token'))&& ! $cadeau->isUserOffering()) {
             $entityManager->remove($cadeau);
             $entityManager->flush();

@@ -10,7 +10,7 @@ use Doctrine\Migrations\AbstractMigration;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-final class Version20251117191300 extends AbstractMigration
+final class Version20261118100135 extends AbstractMigration
 {
     public function getDescription(): string
     {
@@ -21,7 +21,7 @@ final class Version20251117191300 extends AbstractMigration
     {
         // this up() migration is auto-generated, please modify it to your needs
         $this->addSql(<<<'SQL'
-            ALTER TABLE cadeau CHANGE taille taille VARCHAR(50) DEFAULT NULL
+            ALTER TABLE cadeau ADD recommandations VARCHAR(500) IS NULL
         SQL);
     }
 
@@ -29,7 +29,7 @@ final class Version20251117191300 extends AbstractMigration
     {
         // this down() migration is auto-generated, please modify it to your needs
         $this->addSql(<<<'SQL'
-            ALTER TABLE cadeau CHANGE taille taille VARCHAR(15) DEFAULT NULL
+            ALTER TABLE cadeau DROP recommandations
         SQL);
     }
 }

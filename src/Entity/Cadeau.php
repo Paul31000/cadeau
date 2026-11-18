@@ -41,7 +41,7 @@ class Cadeau
      */
     #[ORM\OneToMany(targetEntity: UtilisateurOffre::class, mappedBy: 'cadeau' , cascade: ['persist'], orphanRemoval: true)]
     private Collection $utilisateurOffres;
-
+    
     #[ORM\Column(length: 255)]
     private ?string $titre = null;
 
@@ -50,6 +50,9 @@ class Cadeau
 
     #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
     private ?\DateTimeInterface $date = null;
+
+    #[ORM\Column(length: 500)]
+    private ?string $recommandations = null;
 
     
 
@@ -209,6 +212,18 @@ class Cadeau
         }else{
             return false;
         }
+    }
+
+    public function getRecommandations(): ?string
+    {
+        return $this->recommandations;
+    }
+
+    public function setRecommandations(string $recommandations): static
+    {
+        $this->recommandations = $recommandations;
+
+        return $this;
     }
 
     
