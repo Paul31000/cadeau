@@ -4,6 +4,10 @@
 
 {% block body %}
     <h1>Editer le cadeau pour le groupe {{ cadeau.listeCadeau.groupeCadeau.nomGroupe }}</h1>
+    
+    {% for flash_error in app.flashes('Error') %}
+        <div class="alert alert-warning" role="alert">{{ flash_error }}</div>
+    {% endfor %}
 
     {{ include('cadeau/_form.html.twig', {'button_label': 'Mettre à jour'}) }}
 

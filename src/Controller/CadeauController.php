@@ -81,9 +81,13 @@ final class CadeauController extends AbstractController
     {
         $listeCadeauOrigine= $cadeau->getListeCadeau();
 
-        if ($this->isCsrfTokenValid('delete'.$cadeau->getId(), $request->getPayload()->getString('_token'))) {
+        if ($this->isCsrfTokenValid('delete'.$cadeau->getId(), $request->getPayload()->getString('_token'))&& ! $cadeau->isUserOffering()) {
             $entityManager->remove($cadeau);
             $entityManager->flush();
+        }
+        if($cadeau->isUserOffering()){
+            $this->addFlash('Error', sprintf("Des utilisateur ont interragi avec le cadeau."));
+            return $this->redirectToRoute('app_cadeau_edit', ['id'=>$cadeau->getId()], Response::HTTP_SEE_OTHER);
         }
 
         return $this->redirectToRoute('app_cadeau_new', ['listeCadeaux'=>$listeCadeauOrigine->getId()], Response::HTTP_SEE_OTHER);

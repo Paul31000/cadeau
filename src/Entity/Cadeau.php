@@ -7,6 +7,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints\Length;
 
 #[ORM\Entity(repositoryClass: CadeauRepository::class)]
 class Cadeau
@@ -201,6 +202,14 @@ class Cadeau
         return $this;
     }
 
+    public function isUserOffering(): bool
+    {
+        if(count($this->getUtilisateurOffres())>0){
+            return true;
+        }else{
+            return false;
+        }
+    }
 
     
 }
