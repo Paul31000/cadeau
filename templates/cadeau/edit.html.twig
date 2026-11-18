@@ -3,16 +3,39 @@
 {% block title %}Editer cadeau{% endblock %}
 
 {% block body %}
-    <h1>Editer le cadeau pour le groupe {{ cadeau.listeCadeau.groupeCadeau.nomGroupe }}</h1>
-    
-    {% for flash_error in app.flashes('Error') %}
-        <div class="alert alert-warning" role="alert">{{ flash_error }}</div>
-    {% endfor %}
 
-    {{ include('cadeau/_form.html.twig', {'button_label': 'Mettre à jour'}) }}
+    <div class="container">
+        <div class="row gx-5">
+            <div class="col-12 col-xl-6">
+                <h1>Editer le cadeau pour le groupe {{ cadeau.listeCadeau.groupeCadeau.nomGroupe }}</h1>
+                
+                {% for flash_error in app.flashes('Error') %}
+                    <div class="alert alert-warning" role="alert">{{ flash_error }}</div>
+                {% endfor %}
 
-    <div class="delete-update-cadeau">
-        {{ include('cadeau/_delete_form.html.twig') }}
+                {{ include('cadeau/_form.html.twig', {'button_label': 'Mettre à jour'}) }}
+
+                <div class="delete-update-cadeau">
+                    {{ include('cadeau/_delete_form.html.twig') }}
+                </div>
+            </div>
+             <div class="col-12 col-xl-6 py-3 py-sm-3">
+                <h2>Cadeaux déjà présents:</h2>
+                <ul>
+                    {% for cadeau in listeCadeaux.cadeaux %}
+                        {% if cadeau.id is not null %}
+                            <li class="cadeau-link">
+                                <a  href="{{ path('app_cadeau_edit', {'id': cadeau.id}) }}">
+                                    {{cadeau.titre}} 
+                                </a>
+                            </li>
+                        {% endif %}
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
     </div>
+
+   
     
 {% endblock %}

@@ -17,8 +17,8 @@
                 <ul>
                     {% for cadeau in listeCadeaux.cadeaux %}
                         {% if cadeau.id is not null %}
-                            <li>
-                                <a class="cadeau-link" href="{{ path('app_cadeau_edit', {'id': cadeau.id}) }}">
+                            <li class="cadeau-link">
+                                <a  href="{{ path('app_cadeau_edit', {'id': cadeau.id}) }}">
                                     {{cadeau.titre}} 
                                 </a>
                             </li>

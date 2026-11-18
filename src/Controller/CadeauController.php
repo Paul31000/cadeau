@@ -48,8 +48,10 @@ final class CadeauController extends AbstractController
     #[Route('/{id}/show', name: 'app_cadeau_show', methods: ['GET'])]
     public function show(Cadeau $cadeau): Response
     {
+        $listeCadeaux= $cadeau->getListeCadeau();
         $estDemandeur=$cadeau->getDestinataireCadeau()==$this->getUser()?true:false;
         return $this->render('cadeau/show.html.twig', [
+            'listeCadeaux'=>$listeCadeaux,
             'estDemandeur'=>$estDemandeur,
             'cadeau' => $cadeau,
         ]);
@@ -60,6 +62,7 @@ final class CadeauController extends AbstractController
     {
         $form = $this->createForm(CadeauType::class, $cadeau);
         $form->handleRequest($request);
+        $listeCadeaux= $cadeau->getListeCadeau();
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->flush();
@@ -71,6 +74,7 @@ final class CadeauController extends AbstractController
         }
 
         return $this->render('cadeau/edit.html.twig', [
+            'listeCadeaux'=>$listeCadeaux,
             'cadeau' => $cadeau,
             'form' => $form,
         ]);
