@@ -7,7 +7,9 @@
     {% for flash_succes in app.flashes('Succes') %}
         <div class="alert alert-success" role="alert">{{ flash_succes }}</div>
     {% endfor %}
+    
     {{ include('user/_form.html.twig', {'button_label': 'Mettre à jour'}) }}
 
+    <p>Si vous souhaitez changer votre mot de passe passez par la fonction mot de passe oublié.</p>
 
 {% endblock %}
