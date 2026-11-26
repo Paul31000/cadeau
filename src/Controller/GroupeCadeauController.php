@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\GroupeCadeau;
+use App\Entity\PhantomUser;
 use App\Form\GroupeCadeauType;
 use App\Repository\GroupeCadeauRepository;
 use DateTime;
@@ -12,6 +13,9 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
+use Symfony\Component\Mime\Address;
+use Symfony\Bridge\Twig\Mime\TemplatedEmail;
+use Symfony\Component\Mailer\MailerInterface;
 
 #[IsGranted('ROLE_AUTHENTIFIE')]
 #[Route('/groupe/cadeau')]
@@ -27,7 +31,7 @@ final class GroupeCadeauController extends AbstractController
     }
 
     #[Route('/new', name: 'app_groupe_cadeau_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, EntityManagerInterface $entityManager): Response
+    public function new(Request $request, EntityManagerInterface $entityManager, MailerInterface $mailer): Response
     {
         $groupeCadeau = new GroupeCadeau();
         $groupeCadeau->setDateCreation(new DateTime());
@@ -46,10 +50,14 @@ final class GroupeCadeauController extends AbstractController
                     $entityManager->persist($util);        
                 }
             }
-
             $entityManager->persist($groupeCadeau);
             $entityManager->flush();
 
+            $mails = $this->splitMails((string) $form->get('mails')->getData());
+            
+            $this->createPhantomUsers($mails,$groupeCadeau,$entityManager);
+            $this->sendMailToPhantomUsers($mails,$mailer,$this->getUser(),$groupeCadeau);
+            
             return $this->redirectToRoute('accueil', [], Response::HTTP_SEE_OTHER);
         }
 
@@ -68,7 +76,7 @@ final class GroupeCadeauController extends AbstractController
     }
 
     #[Route('/{id}/edit', name: 'app_groupe_cadeau_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, GroupeCadeau $groupeCadeau, EntityManagerInterface $entityManager): Response
+    public function edit(Request $request, GroupeCadeau $groupeCadeau, EntityManagerInterface $entityManager, MailerInterface $mailer): Response
     {
         //dump($groupeCadeau->getutilisateurConcernes());
         $form = $this->createForm(GroupeCadeauType::class, $groupeCadeau,['users'=>$this->getUser()->getAmi()]);
@@ -76,8 +84,12 @@ final class GroupeCadeauController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->flush();
+            $mails = $this->splitMails((string) $form->get('mails')->getData());
+            $this->createPhantomUsers($mails,$groupeCadeau,$entityManager);
+            $this->sendMailToPhantomUsers($mails,$mailer,$this->getUser(),$groupeCadeau);
 
             return $this->redirectToRoute('app_groupe_cadeau_show', ["id"=>$groupeCadeau->getId()], Response::HTTP_SEE_OTHER);
+            
         }
 
         return $this->render('groupe_cadeau/edit.html.twig', [
@@ -96,4 +108,41 @@ final class GroupeCadeauController extends AbstractController
 
         return $this->redirectToRoute('app_groupe_cadeau_index', [], Response::HTTP_SEE_OTHER);
     }
+
+    function createPhantomUsers($mails,$groupeCadeau,$entityManager){
+        
+        foreach($mails as $mail){
+            $phantomUser=new PhantomUser;
+            $phantomUser->setMail($mail);
+            $groupeCadeau->addPhantomUser($phantomUser);
+            $entityManager->persist($phantomUser);
+        }
+        $entityManager->flush();
+    }
+
+    function splitMails(string $mails): array
+    {
+        $addresses = preg_split('/[,;\s]+/', trim($mails), -1, PREG_SPLIT_NO_EMPTY) ?: [];
+
+        return array_values(array_unique($addresses));
+    }
+    
+    function sendMailToPhantomUsers($mails,$mailer,$user,$groupeCadeau){
+        foreach($mails as $mail){
+            $email = (new TemplatedEmail())
+                ->from(new Address('noreply@paul-s.fr', 'Votre atelier noel'))
+                ->to((string) $mail)
+                ->subject('Une personne du site preeesents.fr vous a ajouté à son évenement')
+                ->htmlTemplate('email/emailPreeesents.html.twig')
+                ->context([
+                    'user'=>$user,
+                    'groupeCadeau'=>$groupeCadeau,
+                    'url' => $this->generateUrl('app_user_new'),
+                ])
+            ;
+            $mailer->send($email);
+        }
+        
+    }
+    
 }

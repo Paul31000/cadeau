@@ -11,6 +11,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 
 class GroupeCadeauType extends AbstractType
 {
@@ -46,7 +47,11 @@ class GroupeCadeauType extends AbstractType
                 'placeholder' => ' ',
                 'autocomplete' => true,
             ])
-
+            ->add('mails', TextareaType::class, [
+                                'row_attr' => ['class' => 'text-editor'],
+                                'label' => 'Adresses e-mail (séparées par des virgules, points-virgules ou espaces)',
+                                'mapped' => false,
+                            ])
         ;
     }
 

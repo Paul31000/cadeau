@@ -37,10 +37,17 @@ class GroupeCadeau
     #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
     private ?\DateTimeInterface $dateCreation = null;
 
+    /**
+     * @var Collection<int, PhantomUser>
+     */
+    #[ORM\ManyToMany(targetEntity: PhantomUser::class, mappedBy: 'groupeCadeau')]
+    private Collection $phantomUsers;
+
     public function __construct()
     {
         $this->utilisateurConcernes = new ArrayCollection();
         $this->listeCadeaux = new ArrayCollection();
+        $this->phantomUsers = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -134,6 +141,33 @@ class GroupeCadeau
     public function setDateCreation(?\DateTimeInterface $dateCreation): static
     {
         $this->dateCreation = $dateCreation;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, PhantomUser>
+     */
+    public function getPhantomUsers(): Collection
+    {
+        return $this->phantomUsers;
+    }
+
+    public function addPhantomUser(PhantomUser $phantomUser): static
+    {
+        if (!$this->phantomUsers->contains($phantomUser)) {
+            $this->phantomUsers->add($phantomUser);
+            $phantomUser->addGroupeCadeau($this);
+        }
+
+        return $this;
+    }
+
+    public function removePhantomUser(PhantomUser $phantomUser): static
+    {
+        if ($this->phantomUsers->removeElement($phantomUser)) {
+            $phantomUser->removeGroupeCadeau($this);
+        }
 
         return $this;
     }

@@ -6,6 +6,7 @@ use DateTime;
 use App\Entity\User;
 use App\Form\UserType;
 use App\Form\UserType2;
+use App\Repository\PhantomUserRepository;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
@@ -34,14 +35,25 @@ final class UserController extends AbstractController
     }
 
     #[Route('/new', name: 'app_user_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, EntityManagerInterface $entityManager, UserPasswordHasherInterface $passwordHasher): Response
+    public function new(Request $request, EntityManagerInterface $entityManager, PhantomUserRepository $phantomUserRep,  UserPasswordHasherInterface $passwordHasher): Response
     {
         $user = new User();
         $form = $this->createForm(UserType::class, $user);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            //dump($request->get('user')["password"]);
+            $userPhantom = $phantomUserRep->findPhantomUserMatch((string) $user->getEmail());
+            if($userPhantom){
+                foreach($userPhantom->getGroupeCadeau() as $groupeCadeau){
+                    $user->addAppartientAuxGroupe($groupeCadeau);
+                    foreach($groupeCadeau->getutilisateurConcernes() as $userFromGroup){
+                        $userFromGroup->addAmi($user);
+                        $user->addAmi($userFromGroup);
+                        $entityManager->persist($userFromGroup);
+                    }
+                }
+                $entityManager->remove($userPhantom);
+            }
 
             $hashedPassword = $passwordHasher->hashPassword(
                 $user,
@@ -96,20 +108,8 @@ final class UserController extends AbstractController
         ]);
     }
 
-    /* #[Route('/{id}', name: 'app_user_delete', methods: ['POST'])]
-    public function delete(Request $request, User $user, EntityManagerInterface $entityManager): Response
-    {
-        $this->denyAccessUnlessGranted('ROLE_ADMIN');
-        if ($this->isCsrfTokenValid('delete'.$user->getId(), $request->getPayload()->getString('_token'))) {
-            $entityManager->remove($user);
-            $entityManager->flush();
-        }
-
-        return $this->redirectToRoute('app_user_index', [], Response::HTTP_SEE_OTHER);
-    } */
-
-    #[Route('/requeteLutin/{id}', name: 'app_requete_ami', methods: ['POST'])]
-    public function addLutin(Request $request, User $user, MailerInterface $mailer, EntityManagerInterface $entityManager): Response
+    #[Route('/addami/{id}', name: 'app_requete_ami', methods: ['POST'])]
+    public function addAmi(Request $request, User $user, MailerInterface $mailer, EntityManagerInterface $entityManager): Response
     {
         $this->denyAccessUnlessGranted('ROLE_AUTHENTIFIE');
         if ($this->isCsrfTokenValid('requete_ami'.$user->getId(), $request->getPayload()->getString('_token'))) {
@@ -132,6 +132,7 @@ final class UserController extends AbstractController
 
         return $this->redirectToRoute('app_user_index', [], Response::HTTP_SEE_OTHER);
     }
+
 
     #[Route('/confirmerLutin/{id}', name: 'app_user_confirm_ami', methods: ['POST'])]
     public function confirmerLutin(Request $request, User $user, MailerInterface $mailer, EntityManagerInterface $entityManager): Response

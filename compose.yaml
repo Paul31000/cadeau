@@ -25,6 +25,7 @@ services:
           - ./mysql_data:/var/lib/mysql
 
   php:
+    user: "1002:1002"
     build:
       args:
         PHP_XDEBUG_MODE: debug
