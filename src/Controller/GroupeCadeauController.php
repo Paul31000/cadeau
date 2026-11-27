@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\GroupeCadeau;
 use App\Entity\PhantomUser;
 use App\Form\GroupeCadeauType;
+use App\Repository\PhantomUserRepository;
 use App\Repository\GroupeCadeauRepository;
 use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
@@ -31,7 +32,7 @@ final class GroupeCadeauController extends AbstractController
     }
 
     #[Route('/new', name: 'app_groupe_cadeau_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, EntityManagerInterface $entityManager, MailerInterface $mailer): Response
+    public function new(Request $request, EntityManagerInterface $entityManager, MailerInterface $mailer, PhantomUserRepository $phantomUserRepository): Response
     {
         $groupeCadeau = new GroupeCadeau();
         $groupeCadeau->setDateCreation(new DateTime());
@@ -55,7 +56,7 @@ final class GroupeCadeauController extends AbstractController
 
             $mails = $this->splitMails((string) $form->get('mails')->getData());
             
-            $this->createPhantomUsers($mails,$groupeCadeau,$entityManager);
+            $this->createPhantomUsers($mails, $groupeCadeau, $entityManager, $phantomUserRepository);
             $this->sendMailToPhantomUsers($mails,$mailer,$this->getUser(),$groupeCadeau);
             
             return $this->redirectToRoute('accueil', [], Response::HTTP_SEE_OTHER);
@@ -76,7 +77,7 @@ final class GroupeCadeauController extends AbstractController
     }
 
     #[Route('/{id}/edit', name: 'app_groupe_cadeau_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, GroupeCadeau $groupeCadeau, EntityManagerInterface $entityManager, MailerInterface $mailer): Response
+    public function edit(Request $request, GroupeCadeau $groupeCadeau, EntityManagerInterface $entityManager, MailerInterface $mailer, PhantomUserRepository $phantomUserRepository): Response
     {
         //dump($groupeCadeau->getutilisateurConcernes());
         $form = $this->createForm(GroupeCadeauType::class, $groupeCadeau,['users'=>$this->getUser()->getAmi()]);
@@ -85,8 +86,10 @@ final class GroupeCadeauController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->flush();
             $mails = $this->splitMails((string) $form->get('mails')->getData());
-            $this->createPhantomUsers($mails,$groupeCadeau,$entityManager);
-            $this->sendMailToPhantomUsers($mails,$mailer,$this->getUser(),$groupeCadeau);
+            if(count($mails)>0){
+                $this->createPhantomUsers($mails, $groupeCadeau, $entityManager, $phantomUserRepository);
+                $this->sendMailToPhantomUsers($mails,$mailer,$this->getUser(),$groupeCadeau);
+            }
 
             return $this->redirectToRoute('app_groupe_cadeau_show', ["id"=>$groupeCadeau->getId()], Response::HTTP_SEE_OTHER);
             
@@ -109,14 +112,20 @@ final class GroupeCadeauController extends AbstractController
         return $this->redirectToRoute('app_groupe_cadeau_index', [], Response::HTTP_SEE_OTHER);
     }
 
-    function createPhantomUsers($mails,$groupeCadeau,$entityManager){
-        
-        foreach($mails as $mail){
-            $phantomUser=new PhantomUser;
-            $phantomUser->setMail($mail);
+    private function createPhantomUsers(array $mails, GroupeCadeau $groupeCadeau, EntityManagerInterface $entityManager, PhantomUserRepository $phantomUserRepository): void
+    {
+        foreach ($mails as $mail) {
+            $phantomUser = $phantomUserRepository->findPhantomUserMatch($mail);
+
+            if (null === $phantomUser) {
+                $phantomUser = new PhantomUser();
+                $phantomUser->setMail($mail);
+                $entityManager->persist($phantomUser);
+            }
+
             $groupeCadeau->addPhantomUser($phantomUser);
-            $entityManager->persist($phantomUser);
         }
+
         $entityManager->flush();
     }
 
